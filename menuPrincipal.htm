@@ -1,0 +1,2632 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8">
+  
+<style>
+
+
+body {
+ 
+  padding: 5px;
+}
+  
+ 
+      
+ /* Create two equal columns that floats next to each other */
+.column {
+  float: left;
+  width: 155px;
+  padding: 0px;
+  
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+ 
+.button {
+  background-color: #ed7c03; /* Green */
+  border: none;
+  color: white;
+  padding: 15px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 15px;
+  margin: 7px 7px;
+  cursor: pointer;
+ 
+  
+  border: none;
+  border-radius: 100px;
+  box-shadow: 0 9px #999;
+}
+
+.button:active {
+  background-color: #d56f03;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
+
+.button:hover {background-color: #d56f03}
+
+.button1 {border-radius: 2px;}
+.button2 {border-radius: 4px;}
+.button3 {border-radius: 8px; background-color: #1c84ed; padding: 10px 20px;}
+.button4 {border-radius: 12px;}
+.button5 {border-radius: 100%;} 
+ 
+ 
+.button3:active {
+  background-color: #1361b0;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+  text-align: center;
+ 
+}
+
+
+.button3:hover {background-color: #1361b0}
+
+
+.button-container {
+  float: left;
+  margin-left: 10px; /* Espacio entre el canvas y los botones */
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Centra los botones verticalmente */
+  height: 340px; /* Alinea con la altura del canvas */
+}
+
+
+.buttonPlayStop {
+            padding: 15px 30px; /* Aumenta el tamaño del botón */
+            font-size: 18px; /* Aumenta el tamaño del texto */
+            margin-bottom: 15px; /* Espacio entre los botones */
+        }
+ 
+ body {
+  margin: 20;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.topnav {
+  overflow: hidden;
+  background-color: #1c84ed;
+  position: fixed;
+  top: 0;
+}
+
+.topnav a {
+  float: left;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 13px 15px;
+  text-decoration: none;
+  font-size: 15px;
+}
+
+.topnav a:hover {
+  background-color: #1361b0;
+  color: black;
+}
+
+.topnav a.active {
+  background-color: #1361b0;
+  color: white;
+}
+
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #1c84ed;
+}
+
+li {
+  float: left;
+}
+
+li a, .dropbtn {
+  display: inline-block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+li a:hover, .dropdown:hover .dropbtn {
+  background-color: #1361b0;
+}
+
+li.dropdown {
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #1c84ed;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: white;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
+.dropdown-content a:hover {background-color: #1361b0;}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+
+
+     
+vertical {
+        writing-mode: vertical-rl;
+        
+    }
+
+
+.buttonBallValues {
+                background-color:#1c84ed;
+                border-radius:8px;
+                border: none;
+                display:inline-block;
+                cursor:pointer;
+                color:white;
+                font-family: Arial, Helvetica, sans-serif;
+                font-size:15px;
+                padding:12px; 
+                text-decoration:none;
+                position: absolute;
+                left: 4%;
+          }   
+
+      
+          .buttonBallValues:hover {
+              background-color: #1361b0;
+          }
+          
+          .buttonBallValues:active {
+        	background-color: #1361b0;
+  		box-shadow: 0 5px #666;
+  		transform: translateY(4px);
+ 		text-align: center;
+              
+          }
+
+   #answer,
+    #show,
+    #hide:target {
+          display: none; 
+    } 
+
+    #hide:target + #show,
+        #hide:target ~ #answer {
+          display: inherit;
+          width: auto;
+          height: auto;
+        }
+
+
+
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+
+.toggle {
+  cursor: pointer;
+  display: inline-block;
+}
+
+
+.toggle-switch {
+  display: inline-block;
+  background: #ccc;
+  border-radius: 16px;
+  width: 58px;
+  height: 32px;
+  position: relative;
+  vertical-align: middle;
+  transition: background 0.25s;
+}
+.toggle-switch:before, .toggle-switch:after {
+  content: "";
+}
+.toggle-switch:before {
+  display: block;
+  background: linear-gradient(to bottom, #fff 0%, #eee 100%);
+  border-radius: 50%;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.25);
+  width: 24px;
+  height: 24px;
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  transition: left 0.25s;
+}
+.toggle:hover .toggle-switch:before {
+  background: linear-gradient(to bottom, #fff 0%, #fff 100%);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.5);
+}
+.toggle-checkbox:checked + .toggle-switch {
+  background: #2196F3;
+}
+.toggle-checkbox:checked + .toggle-switch:before {
+  left: 30px;
+}
+
+.toggle-checkbox {
+  position: absolute;
+  visibility: hidden;
+}
+
+.toggle-label {
+  margin-left: 5px;
+  position: relative;
+  top: 2px;
+  cursor: pointer;
+  display: inline-block;
+}
+
+
+.textarea-container {
+  width: 100%;
+}
+
+textarea {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+@media (min-width: 700px) {
+  textarea {
+    width: 700px;
+  }
+}
+
+.container {
+  text-align: center;
+  position: relative;
+  display: flex;
+}
+
+.canvas-container {
+   margin-right: 10px; /* Espacio entre el canvas y el botón */
+}
+
+.circle {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background-color: white;
+  border: 2px solid #000;
+  position: relative;
+  margin-bottom: 20px;
+  margin-left: 50px;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: red;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+
+.ventanaContador
+{
+  width:50%;
+  color: #d56f03; //#1361b0;
+  font-size:200px;
+  font-weight: bold;
+  text-align:center;
+  position:absolute;
+  left:90px;
+  top:220px;
+  display:none;
+  transform: translate(-50%, -50%);
+}
+
+
+</style>
+ <title>Table Tennis Robot Controller</title>
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+</head>
+
+<body>
+
+
+<ul>
+  <li><a href="#" onclick="drawBallsExercise()">Select</a></li>
+  <li><a href="#" onclick="loadExercise()">Load Exercise</a></li>
+  <li><a href="#" onclick="modifyExercise()">Modify</a></li>
+  <li><a href="#" onclick="newExercise('New')">New</a></li>
+  <li><a href="#" onclick="saveAsExerciseBalls()">Save As</a></li>
+  <li><a href="#" onclick="deleteExercise()">Delete</a></li>
+  <li><a href="#" onclick="alertRestEnd()">prueba</a></li>
+
+  <li class="dropdown">
+    <a href="javascript:void(0)" class="dropbtn">DB</a>
+    <div class="dropdown-content">
+      <a href="#" onclick="exportData()">Export DB</a>
+      <a href="#" onclick="importData(); return false;">Import DB</a>
+	<input type="file" id="import-csv" style="display:none;" accept=".csv" multiple/>
+      
+    </div>
+  </li>
+</ul> 
+
+
+<!-- <canvas id="DemoCanvas" width="200" height="300"></canvas> -->
+  <div class="column">
+     <canvas width="200" height="300"></canvas> 
+     <div class="column">
+    	<label>Select exercise:</label>
+  		<select id="listExercises" name="exercises" size="1" >
+    	 
+  		</select>
+    
+    </div>
+  </div>
+  <div class="button-container">
+        <button onClick="play()" class="button button3 buttonPlayStop">Play</button>
+        <button onClick="stop()" class="button button3 buttonPlayStop">Stop</button>
+    </div>  
+
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+
+<!-- <br><br><br><br><br><br><br><br><br><br><br><br> -->
+
+<div id="exerciseFormContainer"></div>
+
+<div id="newExerciseDIV" style="display:none">
+
+<i>Exercise:</i> <i id="excSelected"></i> 
+
+	<textarea id="exerciseDesc" name="story"
+          rows="4" cols="40" maxlength='200'>Description...
+	</textarea>
+
+
+<div class="slidecontainer">
+  <!-- <label for="myTrajectory">Trajectory</label> -->
+  <p>Ball x min</p>
+  <button id="minusFr">-</button>
+  <input type="range" min="30" max="100" value="30" class="slider" step="10" list="frequencytick" id="myFrequency">
+  <button  id="plusFr">+</button>
+  <output for="myFrequency" id="outputFr">30</output>
+  <datalist id="frequencytick">
+    <option value="30" label="30"></option>
+    <option value="40" label="40"></option>
+    <option value="50" label="50"></option>
+    <option value="60" label="60"></option>
+    <option value="70" label="70"></option>
+    <option value="80" label="80"></option>
+    <option value="90" label="90"></option>
+    <option value="100" label="100"></option>
+ </datalist>
+  
+</div> 
+
+
+<div class="slidecontainer">
+  <p>Training Time:</p>
+  <button id="minusTraining">-</button>
+  <input type="range" min="60" max="240" value="60" class="slider" step="30" list="trainingtick" id="myTraining">
+  <button id="plusTraining">+</button>
+   <output for="myTraining" id="outputTraining">60</output>
+  <datalist id="trainingtick">
+    <option value="60" label="1m"></option>
+    <option value="90" label="1,5m"></option>
+    <option value="120" label="2m"></option>
+    <option value="150" label="2,5m"></option>
+    <option value="180" label="3m"></option>
+    <option value="210" label="3,5m"></option>
+    <option value="240" label="4m"></option>
+</datalist>
+</div>
+
+
+<div class="slidecontainer">
+  <p>Rest Time:</p>
+  <button id="minusRest">-</button>
+  <input type=range  min="5" max="60" value="5" class="slider" step="5" list="resttick"  id="myRest">
+  <button id="plusRest">+</button>
+  <output for="myRest" id="outputRest">30</output>
+  <datalist id="resttick">
+    <option value="5" label="5"></option>
+    <option value="10" label="10"></option>
+    <option value="15" label="15"></option>
+    <option value="20" label="20"></option>
+    <option value="25" label="25"></option>
+    <option value="30" label="30"></option>
+    <option value="35" label="35"></option>
+    <option value="40" label="40"></option>
+    <option value="45" label="45"></option>
+    <option value="50" label="50"></option>
+    <option value="55" label="55"></option>
+    <option value="60" label="60"></option>
+ </datalist>     
+</div>
+
+
+<div class="slidecontainer">
+  <p>Training Cycles:</p>
+  <button id="minusCycle">-</button>
+  <input type="range" min="1" max="10" value="1" class="slider" step="1" list="cycletick" id="myCycle">
+  <button id="plusCycle">+</button>
+  <output for="myCycle" id="outputCycle">1</output>
+   <datalist id="cycletick">
+    <option value="1" label="1"></option>
+    <option value="2" label="2"></option>
+    <option value="3" label="3"></option>
+    <option value="4" label="4"></option>
+    <option value="5" label="5"></option>
+    <option value="6" label="6"></option>
+    <option value="7" label="7"></option>
+    <option value="8" label="8"></option>
+    <option value="9" label="9"></option>
+    <option value="10" label="10"></option>
+
+
+</datalist>
+</div>
+
+<br>
+  
+<label class="toggle">
+  <input class="toggle-checkbox" type="checkbox" id="btnRndDist">
+  <div class="toggle-switch"></div>
+  <span class="toggle-label">RND Distance</span>
+  <output for="btnRndDist" id="outrndD"></output>
+</label>
+
+<br>
+<br>
+
+<label class="toggle">
+  <input class="toggle-checkbox" type="checkbox" id="btnRndPlace">
+  <div class="toggle-switch"></div>
+  <span class="toggle-label">RND Place</span>
+  <output for="btnRndPlace" id="outrndP"></output>
+</label>
+
+ 
+
+
+ <br>
+  <br>
+ <button onClick="addUpdateItem()" class="button button3">Save</button>
+ <!--  <button id="buttonDelete" onClick="deleteItem()" class="button button3">Delete</button> -->
+ <button onClick="newExercise('Cancel')" class="button button3">Cancel</button>
+   
+</div>
+
+
+<!-- //-------------------------Ball Adjust------------------------------------------------------- -->
+<br>
+<a class="button buttonBallValues" href="#hide" id="hide" onClick="newExercise('Cancel')"> + Ball Adjust</a>
+  <a class="button buttonBallValues" href="#" id="show">-- Ball Adjust</a>  
+  
+   <div id="answer">        
+         <br><br><br><br>
+      
+     <div class="container">
+        <div class="circle" id="circle">
+            <div class="dot" id="dot"></div>
+        </div>
+     </div>
+        
+     <i>Exercise: </i><i id="exSelected"></i>   
+     	<div class="row">
+  		<div class="column">
+     			<canvas id="BallCanvas" width="200" height="300"></canvas> 
+        	</div>
+  		<div class="column" > 
+       		       <i>Bola: </i><i id="ballSelected">0</i>  
+				<div><button onClick="ballSelected(1)" class="button button5">.1.</button><button onClick="ballSelected(6)" class="button button5">.6.</button></div>  
+    				<div><button onClick="ballSelected(2)" class="button button5">.2.</button><button onClick="ballSelected(7)"  class="button button5">.7.</button></div>
+    				<div><button onClick="ballSelected(3)"  class="button button5">.3.</button><button onClick="ballSelected(8)"  class="button button5">.8.</button></div>
+    				<div><button onClick="ballSelected(4)"  class="button button5">.4.</button><button onClick="ballSelected(9)"  class="button button5">.9.</button></div>
+    				<div><button onClick="ballSelected(5)"  class="button button5">.5.</button><button onClick="ballSelected(10)" class="button button5">.10</button></div>
+  		</div>
+	</div>
+   					
+<div class="slidecontainer">
+  <!-- <label for="myTrajectory">Trajectory</label> -->
+  <p>Trajectory:</p>
+  <button id="minusTr">-</button>
+  <input type="range" min="1" max="20" value="10" class="slider" step="1" list="trajectorytick" id="myTrajectory" 
+  oninput="this.nextElementSibling.value = this.value" onchange=handleTrajectory()>
+  <button  id="plusTr">+</button>
+  <output for="myTrajectory" id="outputTr">10</output>
+
+<datalist id="trajectorytick">
+  <option value="1" label=" "></option>
+  <option value="4" label=" "></option>
+  <option value="5" label=" "></option>
+  <option value="6" label=" "></option>
+  <option value="7" label=" "></option>
+  <option value="8" label=" "></option>
+  <option value="9" label=" "></option>
+  <option value="11" label=" "></option>
+  <option value="11" label=" "></option>
+  <option value="10" label="---"></option>
+  <option value="11" label=" "></option>
+  <option value="12" label=" "></option>
+  <option value="13" label=" "></option>
+  <option value="14" label=" "></option>
+  <option value="15" label=" "></option>
+  <option value="16" label=" "></option>
+  <option value="17" label=" "></option>
+</datalist>
+</div> 
+
+
+<div class="slidecontainer">
+  <p>Speed:</p>
+  <button id="minusSpeed">-</button>
+  <input type="range" min="0" max="20" value="0" class="slider" step="1" list="speedtick" id="mySpeed" onchange=handleTrajectory()>
+  <button id="plusSpeed">+</button>
+  <output for="mySpeed" id="outputSpeed">0</output>
+   <datalist id="speedtick">
+  <option value="" label=". 0"></option>
+  <option value="" label=". "></option>
+  <option value="" label=". "></option>
+  <option value="" label=". "></option>
+  <option value="" label=". "></option>
+  <option value="" label=". 10"></option>
+  <option value="" label=". "></option>
+  <option value="" label=". "></option>
+  <option value="" label=". "></option>
+  <option value="" label=". "></option> 
+  <option value="" label=". 20"></option>
+</datalist>  
+</div>
+
+
+<div class="slidecontainer">
+  <p>Position:</p>
+  <button id="minusPos">-</button>
+  <input type=range  min="74" max="106" value="90" class="slider" step="2" list="positiontick"  id="myPosition"  onchange=handleTrajectory()>
+  <button id="plusPos">+</button>
+  <output for="myPosition" id="outputPos">90</output>
+ 	 <datalist id="positiontick">
+      <option value="106" label=". Left"></option>
+      <option value="102" label=" "></option>
+      <option value="100" label=" "></option>
+      <option value="98" label=" "></option>
+      <option value="96" label=" "></option>
+      <option value="94" label=" "></option>
+      <option value="92" label=" "></option>
+      <option value="92" label=" "></option>
+      <option value="92" label=" "></option>
+      <option value="90" label="-- 0"></option>
+      <option value="88" label=" "></option>
+      <option value="86" label=" "></option>
+      <option value="84" label=" "></option>
+      <option value="82" label=" "></option>
+      <option value="80" label=" "></option>
+      <option value="78" label=" "></option>
+      <option value="74" label=" "></option>
+      <option value="74" label=". Right"></option>
+	</datalist>
+</div>
+
+
+<div class="slidecontainer">
+  <p>Spin angle:</p>
+  <button id="minusSpinAn">-</button>
+  <input type="range" min="-180" max="210" value="210" class="slider" step="30" list="spinAngtick" id="mySpinAng">
+  <button id="plusSpinAn">+</button>
+  <output for="mySpinAng" id="outputSpinAn">Top</output>
+  <datalist id="spinAngtick">
+  <option value="-180" data-customvalue="Back"></option>
+  <option value="-150" data-customvalue="BL"></option>
+  <option value="-120" data-customvalue="BL+"></option>
+  <option value="-90" data-customvalue="L"></option>
+  <option value="-60" data-customvalue="TL+"></option>
+  <option value="-30" data-customvalue="TL"></option>
+  <option value="0" data-customvalue="Top"></option>
+  <option value="30" data-customvalue="TR"></option>
+  <option value="60" data-customvalue="TR+"></option>
+  <option value="90" data-customvalue="R"></option>
+  <option value="120" data-customvalue="BR+"></option>
+  <option value="150" data-customvalue="BR"></option>
+  <option value="180" data-customvalue="B"></option>
+  <option value="210" data-customvalue="NoSpin"></option>
+</datalist>
+</div>
+
+
+<div class="slidecontainer">
+  <p>Spin strength:</p>
+  <button id="minusSpinStr">-</button>
+  <input type="range" min="1" max="20" value="1" class="slider" step="1" list="spintick" id="mySpinStr">
+  <button id="plusSpinStr">+</button>
+  <output for="mySpinStr" id="outputSpinStr">1</output>
+  <datalist id="spintick">
+  <option value="1" label=". 1"></option>
+  <option value="2" label=". 2"></option>
+  <option value="4" label=". 4"></option>
+  <option value="6" label=". 6"></option>
+  <option value="8" label=". 8"></option>
+  <option value="10" label=". 10"></option>
+  <option value="12" label=". 12"></option>
+  <option value="14" label=". 14"></option>
+  <option value="16" label=". 16"></option>
+  <option value="18" label=". 18"></option> 
+  <option value="20" label=". 20"></option>
+</datalist>
+</div>
+
+<div class="slidecontainer">
+  <p>Ball repetition:</p>
+  <button id="minusRepStr">-</button>
+  <input type="range" min="1" max="30" value="1" class="slider" step="1" list="reptick" id="myRepStr">
+  <button id="plusRepStr">+</button>
+  <output for="myRepStr" id="outputRep">1</output>
+  <datalist id="reptick">
+  <option value="" label=". 1"></option>
+  <option value="" label=". "></option>
+  <option value="" label=". "></option>
+  <option value="" label=". "></option>
+  <option value="" label=". "></option>
+  <option value="" label=". 10"></option>
+  <option value="" label=". "></option>
+  <option value="" label=". "></option>
+  <option value="" label=". "></option>
+  <option value="" label=". "></option> 
+  <option value="" label=". 20"></option>
+</datalist>
+</div>
+
+
+ <br>
+ <button onClick="sendTest()" class="button button3">Test</button> 
+ <button onClick="addBall()" class="button button3">Save</button>
+ <button onClick="deleteBallExercise()" class="button button3">Delete</button>
+
+ <div id="idBallHide" style.display = 'none'></div>
+  
+</div> <!-- //cierra el id="answer"  --> 
+
+
+<div class="ventanaContador" id="ventCont">
+
+
+<!--   ///////////////////////////SCRIPT/////////////////////////////////////////////////////////// -->
+
+<script language="javascript"> 
+
+
+var canvases = document.getElementsByTagName('canvas');
+var canvas = document.getElementById("ExCanvas");
+var startX = 83;
+var startY = 40;
+var trayectory = 10;
+var position = 90;
+var radius = 100;
+var xBall;
+var yBall;
+var ballSel = 0;
+
+
+let idTimerDelay;
+
+let idExerciseSelected;
+let descExerciseSelected;
+let ballPrimaryKey = 0;
+
+let saveAsFlag = 0;
+
+//----variables para el dibujo de los efectos en la bola
+const circle = document.getElementById('circle');
+const dot = document.getElementById('dot'); 
+const positions = {
+            '-180': 6, '-150': 7, '-120': 8, '-90': 9, '-60': 10, '-30': 11, 
+            '0': 12, '30': 1, '60': 2, '90': 3, '120': 4, '150': 5, '180': 6, 
+            '210': 'center'
+        };
+moveDot(210); //Posiciona el punto rojo en el centro de la bola al inicio 
+
+
+//---variables para el contador regresivo
+var countIni = 0;               
+//var conteo = 0;
+//var conteoRep = 0;
+
+
+//------------Abre la BD
+const indexedDB =
+  window.indexedDB ||
+  window.mozIndexedDB ||
+  window.webkitIndexedDB ||
+  window.msIndexedDB ||
+  window.shimIndexedDB;
+
+if (!indexedDB) {
+  console.log("IndexedDB could not be found in this browser.");
+  window.alert('No existe indexedDB para este navegador');
+}
+
+
+let db;
+
+const openRequest = indexedDB.open('tt_db', 9); //9
+openRequest.onupgradeneeded = function (e) {
+  db = e.target.result;
+  console.log('running onupgradeneeded'); 
+  if (!db.objectStoreNames.contains('exercise')) {
+    const storeOS = db.createObjectStore('exercise', { keyPath: 'id' , autoIncrement: true });
+    let idx = storeOS.createIndex('id', 'id', { unique: true }); 
+    //alert('Se creó la BD');
+  }
+  
+  if (!db.objectStoreNames.contains('exercise_ball')) {
+    const storeOS = db.createObjectStore('exercise_ball', { keyPath: ['idex', 'idball'] });
+    //let idw = storeOS.createIndex('id', 'id', { unique: true });
+    let idx = storeOS.createIndex('idex', 'idex', { unique: false });
+    let idy = storeOS.createIndex('idball', 'idball', { unique: false });  
+    
+    //alert('Se creó la BD');
+  }
+      
+};
+
+openRequest.onsuccess = function (e) {
+  console.log('running onsuccess');
+  db = e.target.result;
+  //window.alert('abri la BD');
+};
+
+openRequest.onerror = function (e) {
+  console.log('onerror!');
+  console.dir(e);
+  alert('Error to create DB');
+};
+
+// error handler signifies that the database didn't open successfully
+openRequest.addEventListener('error', () => alert('Database failed to open'));
+
+
+let typeTransaction = ''; //Se usa para que el botón "Save" que se utiliza en las transacciones Modify y New actúe diferente.  
+//----------------------------------
+
+
+
+ drawTable();
+ drawLines(); 
+  
+ handleTrajectory();
+  
+
+function timerDelay() {
+  idTimerDelay = setTimeout(getDisplayExercises, 50);
+  
+}
+
+
+function drawTable() {
+  
+  	for( var i=0; i<canvases.length; i++){
+    	ctx = canvases[i].getContext('2d');
+     
+    	ctx.fillStyle='#0b5bac';    // color of fill
+    	ctx.fillRect(5, 40, 152, 274); // create rectangle  
+ 	}
+  
+}
+
+function drawLines() {
+
+ // Middle Line
+for( var i=0; i<canvases.length; i++){
+     ctx = canvases[i].getContext('2d');
+    ctx.beginPath()
+    ctx.moveTo(startX, startY);
+    ctx.lineTo(startX, 314);
+    ctx.strokeStyle = '#f7f5f3';
+    ctx.lineWidth = 3;
+    ctx.stroke();
+ }  
+
+  
+  // Net Line
+ for( var i=0; i<canvases.length; i++){
+   ctx = canvases[i].getContext('2d'); 
+   ctx.beginPath();
+  ctx.moveTo(5, 168);
+  ctx.lineTo(177,168);
+  ctx.strokeStyle = '#f7f5f3';
+  ctx.lineWidth = 2;
+  ctx.stroke();
+  }
+}
+
+
+function drawBallSelection(ballnumber) {
+	 //window.alert('entre');
+      
+	for( var i=0; i<canvases.length; i++){
+   		ctx = canvases[i].getContext('2d');
+        ctx.fillStyle = "#ed7c03";
+    	ctx.beginPath();
+    	ctx.arc(xBall,yBall,12,0,Math.PI*2,true);
+        ctx.closePath();
+   	ctx.fill();
+        
+         if (ballnumber > 0) {
+		ctx.beginPath();	
+ 		ctx.fillStyle = "#2c2c2e";
+   		ctx.font = "12px Arial";
+		ctx.fillText(ballnumber,xBall-3 ,yBall+3);	
+ 	}     	
+    }
+}
+
+
+function drawBallSelected(x1, y1, length, angle) {
+	 
+      
+    radians = angle * (Math.PI/180);     
+    xBall = x1 - Math.cos(radians ) * length; //cambie el signo en x1 a -	 
+    yBall = y1 + Math.sin(radians ) * length;
+    
+    for( var i=0; i<canvases.length; i++){
+       
+   	ctx = canvases[i].getContext('2d');
+        ctx.fillStyle = "#ed7c03";
+    	ctx.beginPath();
+    	ctx.arc(xBall,yBall,12,0,Math.PI*2,true);
+    	ctx.closePath();
+   		ctx.fill();
+        //window.alert('entre');
+    }
+}
+
+
+function drawLineAtAngle(x1, y1, length, angle) {    
+    
+    
+    ctx.moveTo(x1, y1);  
+    radians = angle * (Math.PI/180);     
+    xBall = x1 - Math.cos(radians ) * length; //cambie el signo en x1 a -	 
+    yBall = y1 + Math.sin(radians ) * length;	   
+    ctx.lineTo(xBall, yBall);       
+    ctx.stroke();
+}
+
+
+function ballSelected(ballS) {
+	document.getElementById("ballSelected").innerHTML = ballS;
+        ballSel = ballS;
+         
+        var ex = 0;
+  	
+        existBall(ballS);
+
+        setTimeout(function() {
+  		getBallValues(ballS);
+		}, 50);
+}
+
+
+function handleTrajectory() {
+  
+  var trayectory = parseInt(document.getElementById("myTrajectory").value); //10
+  var position = parseInt(document.getElementById("myPosition").value); //90
+  var speed = parseInt(document.getElementById("mySpeed").value); //15
+  var spinAngle =  parseInt(document.getElementById("mySpinAng").value); 
+  var spinStren =  parseInt(document.getElementById("mySpinStr").value); 
+  var rep =  parseInt(document.getElementById("myRepStr").value);  
+  
+
+  eraseCanvas();
+      
+	 
+  ctx.beginPath();
+  drawTable();
+  drawLines(); 
+  ctx.stroke();
+  
+  var speedAdjust = trayectory * speed
+  
+ ctx.beginPath();
+ ctx.moveTo(startX,startY);
+ 
+  //window.alert(position);
+  //window.alert(speed);
+  drawLineAtAngle(83,40, speedAdjust, position);
+  
+  ctx.strokeStyle = '#f4f105';
+  ctx.stroke();
+  
+  drawBallSelection(ballSel);
+ 
+  
+}
+
+
+
+  function redrawStoredLines() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    if (storedLines.length == 0) {
+      return;
+    }
+    // redraw each stored line
+    for (var i = 0; i < storedLines.length; i++) {
+      ctx.beginPath();
+      ctx.moveTo(storedLines[i].x1, storedLines[i].y1);
+      ctx.lineTo(storedLines[i].x2, storedLines[i].y2);
+      ctx.stroke();
+    }
+  }
+
+ function eraseCanvas() {
+     for( var i=0; i<canvases.length; i++){
+   		ctx = canvases[i].getContext('2d');
+     	ctx.clearRect(0,0,canvases.width,canvases.height);
+     }
+ }
+ 
+$("#minusTr").click(function(event) {
+  sliderChangeValues("#myTrajectory","-");
+});
+
+$("#plusTr").click(function(event) {
+  sliderChangeValues("#myTrajectory","+");
+});
+
+$("#myTrajectory").on('input change', function(event) {
+  $('#outputTr').text($(event.currentTarget).val());
+});
+
+
+ $("#minusPos").click(function(event) {
+  sliderChangeValues("#myPosition","-");
+});
+
+$("#plusPos").click(function(event) {
+  sliderChangeValues("#myPosition","+");
+});
+
+$("#myPosition").on('input change', function(event) {
+  $('#outputPos').text($(event.currentTarget).val());
+});
+
+
+
+ $("#minusSpeed").click(function(event) {
+  sliderChangeValues("#mySpeed","-");
+});
+
+$("#plusSpeed").click(function(event) {
+  sliderChangeValues("#mySpeed","+");
+});
+
+$("#mySpeed").on('input change', function(event) {
+  $('#outputSpeed').text($(event.currentTarget).val());
+});
+
+
+
+ $("#minusSpinAn").click(function(event) {
+  sliderChangeValues("#mySpinAng","<");
+});
+
+$("#plusSpinAn").click(function(event) {
+  sliderChangeValues("#mySpinAng",">");
+});
+
+
+
+$('#mySpinAng').on('input change', function() {
+    var value = $(this).val();
+    //var label = $('#mySpinAng [value="' + value + '"]').data('customvalue');
+   var label = $('#spinAngtick [value="' + value + '"]').data('customvalue');
+   
+  moveDot(value);
+    
+   $('#outputSpinAn').text(label);
+});
+
+
+
+/*
+$("#mySpinAng").on('input change', function(event) {
+ // $('#outputSpinAn').text($(event.currentTarget).val());
+    //var value = $(this).val();
+    //var label = $('#mySpinAng [value="' + value + '"]').data('label');
+    //$('#outputSpinAn').text(label);
+   
+    var value = $(this).val();
+    var label = $('option[value="' + value + '"]').attr('label');
+    $('#outputSpinAn').text(label);
+});
+*/
+
+
+$("#minusSpinStr").click(function(event) {
+  sliderChangeValues("#mySpinStr","-");
+});
+
+$("#plusSpinStr").click(function(event) {
+  sliderChangeValues("#mySpinStr","+");
+});
+
+$("#mySpinStr").on('input change', function(event) {
+  $('#outputSpinStr').text($(event.currentTarget).val());
+});
+
+
+$("#minusRepStr").click(function(event) {
+  sliderChangeValues("#myRepStr","-");
+});
+
+$("#plusRepStr").click(function(event) {
+  sliderChangeValues("#myRepStr","+");
+});
+
+$("#myRepStr").on('input change', function(event) {
+  $('#outputRep').text($(event.currentTarget).val());
+});
+
+
+
+function sliderChangeValues(sld,direction) {
+  
+  var slider = $(sld);
+  var step = parseInt(slider.attr('step'), 10);
+  var currentSliderValue = parseInt(slider.val(), 10);
+  var newStepValue = currentSliderValue + step;
+  
+ 
+  //window.alert(step);
+
+  if (direction === "-" || direction === "<" ) {
+    newStepValue = currentSliderValue - step;
+  } else {
+    newStepValue = currentSliderValue + step;
+  }
+
+  slider.val(newStepValue).change();
+};
+
+
+
+
+
+function getDisplayExercises() {
+   
+  let txn = db.transaction(['exercise'], "readonly");
+  let exercises = txn.objectStore('exercise');
+  let request = exercises.openCursor();
+  
+  document.getElementById('listExercises').innerHTML = ''; //Limpia la lista de ejercicios
+
+  request.onsuccess = function() {
+  let cursor = request.result;	
+  
+    if (cursor) {
+    let key = cursor.primaryKey; // key (id field)
+    let values = cursor.value; //  object
+    let desc = values.description;
+    let freq = values.frequency;
+    let tr = values.trainingtime;
+    let rest = values.resttime;
+    let cyc = values.cycle;
+    let drnd = values.drnd;
+    let trnd = values.trnd; 
+      
+    document.getElementById('listExercises').innerHTML += "<option value=" + key + ">" + desc + "</option>";
+    cursor.continue();
+   }
+ };
+}
+
+
+
+document.getElementById('listExercises').onclick = function() {
+  
+   idExerciseSelected = document.getElementById('listExercises').value;
+   descExerciseSelected = getDescriptionExercise(idExerciseSelected);
+   
+  if (typeTransaction == 'Modify')
+  {
+	modifyExercise();
+  } 
+  
+  document.getElementById("exSelected").innerHTML = descExerciseSelected;
+    
+   //descExerciseSelected = document.querySelector('option[value="' + idExerciseSelected + '"]').label; 
+   //alert('id: ' + idExerciseSelected + ' Descripcion: ' + descExerciseSelected);
+} 
+
+document.getElementById('listExercises').onchange = function() {
+  
+   idExerciseSelected = document.getElementById('listExercises').value;
+   descExerciseSelected = getDescriptionExercise(idExerciseSelected);
+   
+  if (typeTransaction == 'Modify')
+  {
+	modifyExercise();
+  } 
+  
+  document.getElementById("exSelected").innerHTML = descExerciseSelected;
+    
+  
+}
+
+
+
+document.body.onload = timerDelay(); //carga la lista de ejercicios despues de un delay  
+
+//Devuelve el id del ejercicio seleccionado
+function getSelectedExercise(){
+   //var e = document.getElementById('listExercises')
+   //var value = e.value;
+   //return value;
+   
+   return idExerciseSelected;
+}
+
+
+//Muestra en pantalla los campos para ingresar un nuevo ejercicio  
+function newExercise(btn) {
+  var x = document.getElementById("newExerciseDIV");
+  
+
+  if (x.style.display === "none")
+  {
+    if (btn === "New") 
+    {
+    	x.style.display = "block";
+        typeTransaction = 'New';
+	document.getElementById("exerciseDesc").value = "";
+        sliderChangeBar(myFrequency,30);
+    	sliderChangeBar(myTraining,60);
+    	sliderChangeBar(myRest,30);
+    	sliderChangeBar(myCycle,1);	
+       	document.getElementById("btnRndDist").checked = false;
+    	document.getElementById("btnRndPlace").checked = false;	
+    }
+    else 
+    {
+       if (btn === "Modify")
+       {
+	  x.style.display = "block";
+          typeTransaction = 'Modify';
+          //alert ('entre');
+       }	 	
+	
+    }		
+  }
+  else 
+  { 
+    if (btn === "Cancel") 
+    { 
+    	x.style.display = "none";
+	typeTransaction = '';	
+    }		
+  }
+}
+
+
+ $("#minusFr").click(function(event) {
+  sliderChangeValues("#myFrequency","-");
+});
+
+$("#plusFr").click(function(event) {
+  sliderChangeValues("#myFrequency","+");
+});
+
+$("#myFrequency").on('input change', function(event) {
+  $('#outputFr').text($(event.currentTarget).val());
+});
+
+
+ $("#minusTraining").click(function(event) {
+  sliderChangeValues("#myTraining","-");
+});
+
+$("#plusTraining").click(function(event) {
+  sliderChangeValues("#myTraining","+");
+});
+
+$("#myTraining").on('input change', function(event) {
+  $('#outputTraining').text($(event.currentTarget).val());
+});
+
+
+
+ $("#minusRest").click(function(event) {
+  sliderChangeValues("#myRest","-");
+});
+
+$("#plusRest").click(function(event) {
+  sliderChangeValues("#myRest","+");
+});
+
+$("#myRest").on('input change', function(event) {
+  $('#outputRest').text($(event.currentTarget).val());
+});
+
+
+
+ $("#minusCycle").click(function(event) {
+  sliderChangeValues("#myCycle","-");
+});
+
+$("#plusCycle").click(function(event) {
+  sliderChangeValues("#myCycle","+");
+});
+
+$("#myCycle").on('input change', function(event) {
+  $('#outputCycle').text($(event.currentTarget).val());
+});
+
+
+$("#btnRndDist").click(function(event) {
+ outrndD = document.getElementById("btnRndDist").checked;
+});
+
+$("#btnRndPlace").click(function(event) {
+outrndP = document.getElementById("btnRndPlace").checked;
+});
+
+function sliderChangeValues(sld,direction) {
+  
+  var slider = $(sld);
+  var step = parseInt(slider.attr('step'), 10);
+  var currentSliderValue = parseInt(slider.val(), 10);
+  var newStepValue = currentSliderValue + step;
+  
+  if (direction === "-" || direction === "<" ) {
+    newStepValue = currentSliderValue - step;
+  } else {
+    newStepValue = currentSliderValue + step;
+  }
+
+  slider.val(newStepValue).change();
+};
+
+function getExerciseDesc() {
+	var desc = document.getElementById("exerciseDesc").value;
+    return desc;
+}
+
+function getBallMin() {
+	var ball = document.getElementById("outputFr").value;
+    return ball;
+}
+
+function getTraining() {
+	var tr = document.getElementById("outputTraining").value;
+    return tr;
+}
+
+
+function getRest() {
+	var rest = document.getElementById("outputRest").value;
+    return rest;
+}
+
+function getCycle() {
+	var cycle = document.getElementById("outputCycle").value;
+    return cycle;
+}
+
+
+
+function rndDist() {
+   var rndD = document.getElementById("btnRndDist").checked;
+   return rndD;
+}
+
+function rndPlace() {
+	var rndP = document.getElementById("btnRndPlace").checked;
+    return rndP;
+}
+
+
+function addItem() {
+  const transaction = db.transaction(['exercise'], 'readwrite');
+  const store = transaction.objectStore('exercise');
+  var desc = getExerciseDesc();
+  var ball = getBallMin();
+  var trt = getTraining();
+  var rest = getRest();
+  var cyc = getCycle();
+  var rndD = rndDist();
+  var rndP = rndPlace();
+  
+  const item = {
+    description: desc,
+    frequency: ball,
+    trainingtime: trt,
+    resttime: rest,
+	cycle: cyc,
+	drnd: rndD,
+	trnd: rndP,
+    };    
+
+  const request = store.add(item);
+
+  request.onerror = function (e) {
+    console.log('Error', e.target.error.name);
+  };
+  request.onsuccess = function (e) {
+    console.log('Woot! Did it');
+  };
+
+   getDisplayExercises(); //refresca la lista de ejercicios
+}
+
+
+
+  
+ function sliderChangeBar(sld,value) {
+  
+  var slider = $(sld);
+    
+  slider.val(value).change();
+}
+
+
+//------------------
+
+function updateItem() {
+  
+  var desc = getExerciseDesc();
+  var ball = getBallMin();
+  var trt = getTraining();
+  var rest = getRest();
+  var cyc = getCycle();
+  var rndD = rndDist();
+  var rndP = rndPlace();
+  var idex = getSelectedExercise();
+  
+  //alert ('indice: ' + idex + ' descripcion: ' + desc + ' freq: ' + ball);
+  
+  let transaction = db.transaction(['exercise'], 'readwrite');
+  let store = transaction.objectStore('exercise');
+  
+  var request = store.openCursor();
+  
+  request.onerror = () => {
+       console.log("case if have an error");
+      alert ('error al abrir el cursor');
+  }; 
+  
+  request.onsuccess = (e) => {
+  //var cursor = request.result;
+  var cursor = e.target.result;
+  let key = ''; 
+  let values = ''; // object
+   if(cursor){
+       key = cursor.primaryKey; 
+       values = cursor.value; // object
+       if (idex == key){
+                values.description=desc;
+    		values.frequency=ball;
+    		values.trainingtime=trt;
+    		values.resttime=rest;
+    		values.cycle=cyc;
+    		values.drnd=rndD;
+    		values.trnd=rndP;
+  	          
+          var res = cursor.update(values);
+          res.onsuccess = () => {
+                console.log("update success!!");
+                //alert('se actualizó');
+		showMessage("Exercise Updated!")
+           }
+            res.onerror = () => {
+                console.log("update failed!!");
+                alert('Updated Error!'); 
+            }
+        } // idex
+        cursor.continue();
+    
+    } //cursor
+    else{
+        console.log("fin");
+    }
+ }; 
+  
+   getDisplayExercises(); //refresca la lista de ejercicios
+}
+
+
+
+function addUpdateItem() {
+  
+ if (typeTransaction == 'New') {
+     addItem();
+ }
+ else
+     { 
+	if (typeTransaction == 'Modify') {
+      	   updateItem();		
+       }
+    }		  
+}
+
+
+  
+ function sliderChangeBar(sld,value) {
+  
+  var slider = $(sld);
+    
+  slider.val(value).change();
+}
+
+
+
+
+
+//--------------------
+
+ function modifyExercise(){
+   var idex = getSelectedExercise();
+   typeTransaction = 'Modify';   
+   
+   newExercise(typeTransaction); //muestra la pantalla que contiene los parametros.
+   
+           	
+  let txn = db.transaction(['exercise'], "readonly");
+  let exercises = txn.objectStore('exercise');
+  let request = exercises.openCursor();
+
+  request.onsuccess = function() {
+  let cursor = request.result;	
+ 
+  if (cursor) {
+    let key = cursor.primaryKey; // book key (id field)
+    let values = cursor.value; // book object
+    if (idex == key){
+       //alert ('valor: ' + key + '  desc: ' + values.description);
+    document.getElementById("exerciseDesc").value = values.description;
+    document.getElementById("outputFr").value = values.frequency;
+    document.getElementById("outputTraining").value = values.trainingtime;
+    document.getElementById("outputRest").value = values.resttime;
+    document.getElementById("outputCycle").value = values.cycle;
+    document.getElementById("btnRndDist").checked = values.drnd;
+    document.getElementById("btnRndPlace").checked = values.trnd;
+    
+    //Modifica el valor del slider en pantalla.
+    sliderChangeBar(myFrequency,values.frequency);
+    sliderChangeBar(myTraining,values.trainingtime);
+    sliderChangeBar(myRest,values.resttime);
+    sliderChangeBar(myCycle,values.cycle);
+    
+    } //if key
+    cursor.continue();
+  } //cursor
+ 
+ }; //funcion
+}
+
+function deleteExercise(){
+  var idex = getSelectedExercise();
+  
+  if (idex > 0) {
+     var result = confirm("Want to delete this Exercise?");
+      	if (result) {
+  	  deleteItem();  	
+	}
+  } 
+} 
+
+
+function deleteItem() {
+  var idex = getSelectedExercise();
+  
+  let transaction = db.transaction(['exercise'], 'readwrite');
+  let store = transaction.objectStore('exercise');
+  
+  const request = store.delete(+idex); //el + delante de la clave convierte el string a un entero!
+
+  request.onerror = function (e) {
+    console.log('Error', e.target.error.name);
+  };
+
+  request.onsuccess = () => {
+    console.log('deleted');
+    //alert('Se borro el id ' + idex);
+    getDisplayExercises(); //refresca la lista de ejercicios
+  };
+}
+
+
+
+function getDescriptionExercise(idKey){
+  var desc;
+  desc = document.querySelector('option[value="' + idKey + '"]').label;	
+  return desc; 
+}
+
+
+function getBallNumber(){
+   var ball = document.getElementById("ballSelected").innerHTML;
+   return ball;
+}
+
+function getTrajectory(){
+   var traj = document.getElementById("outputTr").value;
+    return traj;
+}
+
+function getSpeed(){
+   var spd = document.getElementById("outputSpeed").value;
+    return spd;
+}
+
+function getPosition(){
+   var pos = document.getElementById("outputPos").value;
+    return pos;
+}
+
+function getSpinAng(){
+   //var spa = document.getElementById("outputSpinAn").text;
+   var spa = document.getElementById("mySpinAng").value;
+   return spa;
+}
+
+function getSpinStr(){
+   var sps = document.getElementById("outputSpinStr").value;
+    return sps;
+}
+
+
+function getBallRep(){
+   var br = document.getElementById("outputRep").value;
+    return br;
+}
+
+function addBall() {
+  const transaction = db.transaction(['exercise_ball'], 'readwrite');
+  const store = transaction.objectStore('exercise_ball');
+  var idx = idExerciseSelected;
+  var number = getBallNumber();
+  var traj = getTrajectory();
+  var spd = getSpeed();
+  var pos = getPosition();
+  var spinA = getSpinAng();
+  var spinS = getSpinStr();
+  var rep = getBallRep();
+  
+  //alert('numero de bola ' + number);
+  const item = {
+    idex: idx,
+    idball: number,
+    trajectory: traj,
+    speed: spd,
+    position: pos,
+    spinAngle: spinA,
+    spinStrength: spinS,
+    repetition: rep,
+    };    
+    
+   const request = store.add(item);  
+ 
+   request.onerror = function (e) {
+    console.log('Error', e.target.error.name);
+    updateBall(idx,number); //actualiza los datos de la bola si ya existe!
+  };
+  request.onsuccess = function (e) {
+    console.log('se grabó una bola en la BD!');
+    //alert('se grabó esta bola en la BD!');
+    showMessage('ball inserted!');
+  };
+}
+
+
+function getBallValues(idBall){
+  var idexercise = idExerciseSelected;
+  //var number = getBallNumber();
+  var number = idBall;  
+  
+  var exist =  document.getElementById("idBallHide").value;
+   if ( exist == 1) {
+	//alert('existe bola');
+   }
+   else {
+ 	 //****alert('No existe bola ' + idBall);	
+	}    
+        
+
+  let txn = db.transaction(['exercise_ball'], "readonly");
+  let store = txn.objectStore('exercise_ball');
+  let ballidex = store.index('idex');
+  
+  let request = store.openCursor();
+ 
+  request.onsuccess = function() {
+  let cursor = request.result;	
+ 
+  if (cursor) {
+    let key = cursor.primaryKey; // book key (id field)
+    let values = cursor.value; // book object
+     if (idexercise == values.idex){    
+      	  if (number == values.idball){
+       		//alert ('ejercicio: ' + values.idex + ' bola: ' + number);
+    		document.getElementById("myTrajectory").value = values.trajectory;
+    		document.getElementById("myPosition").value = values.position;
+    		document.getElementById("mySpeed").value = values.speed;
+    		document.getElementById("mySpinAng").value = values.spinAngle;
+    		document.getElementById("mySpinStr").value = values.spinStrength;
+    		document.getElementById("myRepStr").value = values.repetition;
+        
+    		//Modifica el valor del slider en pantalla.
+    		sliderChangeBar(myTrajectory,values.trajectory);
+    		sliderChangeBar(myPosition,values.position);
+    		sliderChangeBar(mySpeed,values.speed);
+    		sliderChangeBar(mySpinAng,values.spinAngle);
+    		sliderChangeBar(mySpinStr,values.spinStrength);
+    		sliderChangeBar(myRepStr,values.repetition);
+                
+    
+        } //if key
+    } // if	
+    cursor.continue();
+ } //cursor
+ 
+ }; //funcion
+}
+
+
+function updateBall(idex,number) {
+  
+  var traj = getTrajectory();
+  var spd = getSpeed();
+  var pos = getPosition();
+  var spinA = getSpinAng();
+  var spinS = getSpinStr();
+  var rep = getBallRep();
+  
+  let transaction = db.transaction(['exercise_ball'], 'readwrite');
+  let store = transaction.objectStore('exercise_ball');
+  
+  var request = store.openCursor();
+  
+  request.onerror = () => {
+       console.log("case if have an error");
+      alert ('error al abrir el cursor');
+  }; 
+  
+  request.onsuccess = (e) => {
+  var cursor = e.target.result;
+  let key = ''; 
+  let values = ''; // object
+  let clave = idex + ',' + number
+   if(cursor){
+       key = cursor.primaryKey; 
+       values = cursor.value; // object
+       if (clave == key){
+                //alert ('key: ' + key + ' es igual a clave: ' + clave);
+ 		values.trajectory = traj;
+    		values.speed = spd;
+    		values.position = pos;
+    		values.spinAngle = spinA;
+    		values.spinStrength = spinS;
+		values.repetition = rep;	
+  	          
+          var res = cursor.update(values);
+          res.onsuccess = () => {
+                console.log("update success!!");
+                //alert('se actualizó bola');
+		showMessage('ball was updated!');
+           }
+            res.onerror = () => {
+                console.log("update failed!!");
+                alert('Updated Error!'); 
+            }
+        } // idex
+        
+        cursor.continue();
+    
+    } //cursor
+    else{
+        console.log("fin");
+    }
+ }; 
+}
+
+
+function deleteBallExercise(){
+    
+    var result = confirm("Want to delete this Ball?");
+    if (result) {
+  	  var idex = idExerciseSelected;
+          var number = getBallNumber();
+          deleteBall(idex,number);  	
+    }
+  
+} 
+
+
+function deleteBall(idex,number) {
+  //'idex', 'idball'
+  
+  let transaction = db.transaction(['exercise_ball'], 'readwrite');
+  let store = transaction.objectStore('exercise_ball');
+  let keyid =  [idex, number]; 
+  
+  //alert('clave ' + keyid);
+  
+  const request = store.delete(keyid);
+  
+  request.onerror = () => {
+       console.log("case if have an error");
+      alert('error to delete');
+  }; 
+  
+  
+  request.onsuccess = (e) => {
+    console.log('deleted');
+    //alert('Ball deleted!'); 
+    showMessage('Ball was deleted!');
+  }; 
+ 
+}
+
+
+
+function existBall(idBall){
+  
+  var idexercise = idExerciseSelected;
+  var number = idBall;  
+
+        	
+  let txn = db.transaction(['exercise_ball'], "readonly");
+  let store = txn.objectStore('exercise_ball');
+  let ballidex = store.index('idex');
+  
+  document.getElementById("idBallHide").value = 0; 
+   
+  let request = store.openCursor();
+ 
+  request.onsuccess = function() {
+  let cursor = request.result;	
+ 
+  if (cursor) {
+    let key = cursor.primaryKey; // book key (id field)
+    let values = cursor.value; // book object
+     if (idexercise == values.idex){    
+      	  if (number == values.idball){
+                
+       		document.getElementById("idBallHide").value = 1;
+
+                document.getElementById("myTrajectory").value = values.trajectory;
+    		document.getElementById("myPosition").value = values.position;
+    		document.getElementById("mySpeed").value = values.speed;
+    			                
+    
+        } //if key
+    } // if	
+    cursor.continue();
+   } //cursor
+ 
+ }; //funcion
+  
+}
+
+
+//Para un ejercicio, dibuja todas las bolas a la vez en la mesa
+function drawBallsExercise() {
+  
+  idexercise = document.getElementById('listExercises').value;
+  
+  eraseCanvas(); 
+
+  ctx.beginPath();
+  drawTable();
+  drawLines(); 
+  ctx.stroke();
+  
+  let txn = db.transaction(['exercise_ball'], "readonly");
+  let store = txn.objectStore('exercise_ball');
+  
+  let request = store.openCursor();
+   
+   request.onsuccess = function() {
+   let cursor = request.result;	
+
+    if (cursor) {
+    let key = cursor.primaryKey; // book key (id field)
+    let values = cursor.value; // object
+     
+    if (idexercise == values.idex){    
+      	  	var ballnumber = values.idball
+       		//alert('bola: ' + ballnumber);
+
+                var trayectory = values.trajectory;
+    		var position = values.position;
+    		var speed = values.speed;
+    		var speedAdjust = trayectory * speed;       
+		
+ 		ctx.beginPath();
+ 	        ctx.moveTo(startX,startY);
+                 
+		drawLineAtAngle(83,40, speedAdjust, position);
+  
+  		ctx.strokeStyle = '#f4f105';
+  		ctx.stroke();
+    		drawBallSelection(ballnumber);
+	
+		//ctx.fillStyle = "#ed7c03"; 
+    } // if	
+    cursor.continue();
+   } //cursor
+ }; //funcion
+}
+
+function showMessage(msg) {
+ var element = document.createElement('div');
+ element.innerHTML = msg;
+ element.style.position = "fixed";
+ element.style.top = "50%"; 
+ element.style.left = "50%";
+ element.style.transform = "translate(-50%, -50%)";
+ element.style.backgroundColor = "white";
+ element.style.padding = "14px"; 
+ element.style.border = "1px solid black";
+ document.body.appendChild(element);
+ 
+  setTimeout(function() {
+   element.style.display = 'none';
+  },1500);
+}	 
+
+
+function exportData () {
+  exportExercises();
+  exportExerciseBall();
+}
+
+
+
+function exportExercises() {
+    var transaction = db.transaction(['exercise'], "readonly");
+    var objectStore = transaction.objectStore('exercise');
+    var csv = [];
+    var headers = ["id", "description", "frequency", "trainingtime", "resttime", "cycle", "drnd", "trnd"];
+
+    // Agregar los encabezados al CSV
+    //csv.push(headers.join(","));
+
+    objectStore.openCursor().onsuccess = function(event) {
+        var cursor = event.target.result;
+        if (cursor) {
+            var record = cursor.value;
+
+            // Crear la fila en el orden especificado por los encabezados
+            var row = headers.map(header => {
+                var value = record[header] !== undefined ? record[header] : "";
+                // Reemplazar saltos de línea y otros caracteres especiales
+                if (typeof value === 'string') {
+                    value = value.replace(/(\r\n|\n|\r)/gm, " "); // Reemplazar saltos de línea con espacios
+                    value = value.replace(/"/g, '""'); // Escapar comillas dobles
+                }
+                return value; // No envolver en comillas dobles
+            });
+            csv.push(row.join(","));
+
+            cursor.continue();
+        } else {
+            // Descargar el archivo CSV una vez que se han procesado todos los registros
+            downloadCSV(csv.join("\n"), "dataExercises.csv");
+        }
+    };
+}
+
+
+
+function exportExerciseBall() {
+    var transaction = db.transaction(['exercise_ball'], "readonly");
+    var objectStore = transaction.objectStore('exercise_ball');
+    var csv = [];
+    
+    objectStore.openCursor().onsuccess = function(event) {
+      var cursor = event.target.result;
+      if (cursor) {
+        csv.push(Object.values(cursor.value).join(","));
+        cursor.continue();
+      }
+      else {
+             downloadCSV(csv.join("\n"), "dataExerciseBall.csv");
+           }
+   };
+}
+
+
+function downloadCSV(content, fileName) {
+    var blob = new Blob([content], { type: 'text/csv;charset=utf-8;' });
+    var link = document.createElement("a");
+    if (link.download !== undefined) {
+        // Navegadores modernos
+        var url = URL.createObjectURL(blob);
+        link.setAttribute("href", url);
+        link.setAttribute("download", fileName);
+        link.style.visibility = 'hidden';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
+}
+
+
+function importData() {
+  const importCsv = document.getElementById("import-csv");
+  importCsv.click();
+
+  importCsv.addEventListener("change", function(event) {
+    const files = event.target.files;
+    if (files.length > 0) {
+      for (let file of files) {
+        console.log("File selected:", file); // Verifica que el archivo se ha seleccionado
+        readAndImportFile(file);
+       
+      }
+    }
+  });
+}
+
+
+function readAndImportFile(file) {
+  const reader = new FileReader();
+  reader.onload = function(event) {
+    const csv = event.target.result;
+    console.log("CSV file content:", csv); // Verifica el contenido del archivo CSV
+
+    if (!csv) {
+      console.error("CSV file is empty or could not be read");
+      return;
+    }
+
+    try {
+      Papa.parse(csv, {
+        header: false, // No headers in the CSV file
+        skipEmptyLines: true, // Omitir líneas vacías, si las hay
+        complete: function(results) {
+          console.log("Parsing complete:", results); // Verifica el resultado del parseo
+          processParsedData(file.name, results.data);
+          //alert ('archivo: ' + file.name + ' datos: ' + results.data);
+        },
+        error: function(error) {
+          console.error("Parsing error:", error); // Muestra errores de parseo si los hay
+        }
+      });
+    } catch (error) {
+      console.error("Exception during parsing:", error);
+    }
+  };
+  reader.onerror = function(event) {
+    console.error("File reading error:", event); // Muestra errores de lectura del archivo si los hay
+  };
+  reader.readAsText(file);
+}
+
+
+function processParsedData(fileName, data) {
+  //const output = document.getElementById("output");
+  //output.innerHTML = ''; // Clear previous content
+
+  
+ if (!data || data.length === 0) {
+    console.error("Parsed data is empty or invalid");
+    return;
+  }
+ 
+  
+  data.forEach(function(row, index) {
+    let item;
+    if (fileName === "dataExercises.csv") {
+	
+      if (row.length < 7) {
+        console.error(`Invalid row format for dataExercises.csv: ${row}`);
+        return;
+      }
+      
+      item = {
+        id: row[0],
+        description: row[1],
+        frequency: row[2],
+        trainingtime: row[3],
+        resttime: row[4],
+        cycle: row[5],
+        drnd: row[6],
+        trnd: row[7],
+      };
+    } else if (fileName === "dataExerciseBall.csv") {
+      if (row.length < 8) {
+        console.error(`Invalid row format for dataExerciseBall.csv: ${row}`);
+        return;
+      }
+      item = {
+        idex: row[0],
+        idball: row[1],
+        trajectory: row[2],
+        speed: row[3],
+        position: row[4],
+        spinAngle: row[5],
+        spinStrength: row[6],
+        repetition: row[7],
+      };
+    } else {
+      console.error(`Unknown file: ${fileName}`);
+      return;
+    }
+
+    // Muestra cada fila en el div de salida
+    //const rowElement = document.createElement("div");
+    //rowElement.textContent = `File: ${fileName}, Row ${index + 1}: ${JSON.stringify(item)}`;
+    //output.appendChild(rowElement);
+
+    // Inserta cada item en IndexedDB o procesa los datos según sea necesario
+   
+    insertDataIntoDB(item, fileName);
+  });
+}
+
+
+
+function insertDataIntoDB(item, fileName) {
+  const request = window.indexedDB.open("tt_db", 9);
+     
+    request.onsuccess = function(event) {
+    const db = event.target.result;
+    const objectStoreName = fileName === "dataExercises.csv" ? "exercise" : "exercise_ball";
+    const transaction = db.transaction([objectStoreName], "readwrite");
+    const objectStore = transaction.objectStore(objectStoreName);
+    const addRequest = objectStore.add(item);
+    addRequest.onsuccess = function() {
+      console.log(`Data imported successfully into ${objectStoreName}`);
+    };
+    addRequest.onerror = function(event) {
+      console.error(`Error adding data to ${objectStoreName}:`, event.target.error);
+    };
+  };
+
+  request.onerror = function(event) {
+    console.error("IndexedDB error:", event); // Muestra errores de IndexedDB si los hay
+  };
+}
+
+
+function moveDot(value) {
+            //window.alert ('Posicion : ' + value);
+	    const step = positions[value];
+            if (step === 'center') {
+                // Position the dot in the center
+                dot.style.left = '50%';
+                dot.style.top = '50%';
+                dot.style.transform = 'translate(-50%, -50%)';
+            } else if (step !== undefined) {
+                const angle = (step - 3) * 30; // Adjust angle for the correct position
+                const radius = 30; // Adjusted radius of the circle where the dot will be placed
+                const dotX = 40 + radius * Math.cos(angle * Math.PI / 180); // 40 is the center x-coordinate (half of 80)
+                const dotY = 40 + radius * Math.sin(angle * Math.PI / 180); // 40 is the center y-coordinate (half of 80)
+
+                dot.style.left = `${dotX}px`;
+                dot.style.top = `${dotY}px`;
+                dot.style.transform = 'translate(-50%, -50%)';
+            } 
+}
+
+
+//Connectivity 
+ var loc;
+ loc="192.168.4.1"; 	
+ var connection=new WebSocket("ws://"+loc+":81/");
+ connection.onopen=function() {
+        var e='{"type":"app_TableTennisTrainer3_connected"';
+        e+=',"waiting for data.."',
+        e+="}"  //,
+        connection.send(e) //Comentar linea solo en diseño
+	alert("Connected to Robot");
+ };
+
+ connection.onerror=function(e) {
+        alert("WebSocket Error ",e)
+      };
+
+ connection.onmessage=function(e) {
+        //alert("Robot: ",e.data)
+	 try {
+        	let data = JSON.parse(e.data);  // Convertir texto plano JSON a objeto
+        	console.log("Mensaje JSON recibido: ", data);
+        	if (data.status === "connected") {
+			alert("MensajeJson: " + data.msg);
+		}
+		if (data.command === "wakeup") {
+			alertRestEnd();	
+		}	
+	
+    } catch (e) {
+        console.error("Error al deserializar JSON: ", e);
+        //alert("MensajePlano: " + event.data);  // Si no es JSON, mostrar como texto plano
+    }
+        
+};
+
+
+//*******************************************
+
+function loadExercise() {
+  
+  loadExerciseParameters();  
+  loadBallsParameters(); 
+  
+}
+
+
+function loadExerciseParameters(){
+      
+   var frequency;
+   var trngtime;
+   var rest;
+   var cycle;
+   var drnd;
+   var trnd;   
+   
+  var idex = getSelectedExercise();
+           	
+  let txn = db.transaction(['exercise'], "readonly");
+  let exercises = txn.objectStore('exercise');
+  let request = exercises.openCursor();
+
+  request.onsuccess = function() {
+  let cursor = request.result;	
+ 
+  if (cursor) {
+    let key = cursor.primaryKey; // book key (id field)
+    let values = cursor.value; // book object
+    if (idex == key)
+    {
+    	frequency = values.frequency;
+        trngtime = values.trainingtime;
+    	rest = values.resttime;
+    	cycle = values.cycle;
+    	drnd = values.drnd;
+    	trnd = values.trnd;
+        
+        //window.alert('ejercicio: ' + idex + ' freq: ' + frequency + ' training: ' +  trngtime + ' rest: ' +  rest + ' cycle: ' + cycle);  
+	
+	var msg = JSON.stringify({
+                    type: 'exercise',
+		    frequency: frequency,
+                    trainingtime: trngtime,
+                    rest: rest,
+                    cycle: cycle,
+                    drnd: drnd,
+                    trnd: trnd
+                });
+
+  	connection.send(msg);    
+
+    } //if key
+    cursor.continue();
+  } //cursor
+ 
+ }; //function
+}
+
+
+//Envía todas las bolas con sus parmametros al Esp8266
+function loadBallsParameters() {
+  
+   var idexercise = getSelectedExercise();
+  
+   let txn = db.transaction(['exercise_ball'], "readonly");
+   let store = txn.objectStore('exercise_ball');
+  
+   let request = store.openCursor();
+   
+   request.onsuccess = function() {
+   let cursor = request.result;	
+
+    if (cursor) {
+    let key = cursor.primaryKey; // book key (id field)
+    let values = cursor.value; // object
+     
+    if (idexercise == values.idex){    
+      	  	var ballnumber = values.idball
+       		//alert('bola: ' + ballnumber);
+
+                var trajectory = values.trajectory;
+    		var position = values.position;
+    		var speed = values.speed;
+    		var spinAngle = values.spinAngle;       
+		var spinStren = values.spinStrength;
+		var rep = values.repetition;
+
+	var message = JSON.stringify({
+                    type: 'ball',
+		    ball: ballnumber, 
+                    trajectory: trajectory,
+                    position: position,
+                    speed: speed,
+                    spinAngle: spinAngle,
+                    spinStren: spinStren,
+                    rep: rep
+                });
+
+  	connection.send(message);
+ 		
+    } // if	
+    cursor.continue();
+   } //cursor
+ }; //funcion
+}
+
+
+//Send ball parameters to Test and adjust values, before save 
+function sendTest()
+{
+  
+  var traj = getTrajectory();
+  var spd = getSpeed();
+  var pos = getPosition();
+  var spinA = getSpinAng();
+  var spinS = getSpinStr();
+  	
+  var message = JSON.stringify({
+                    type: 'test',
+		    spinAngle: spinA,
+		    spinStren: spinS,
+		    speed: spd,
+		    position: pos,
+		    trajectory: traj
+                });
+
+  	connection.send(message);
+
+
+}
+
+
+//Send PLAY
+function play()
+{
+  var message = JSON.stringify({
+                    type: 'play'
+		});
+
+  	connection.send(message);
+
+}
+
+//Send STOP
+function stop()
+{
+  var message = JSON.stringify({
+                    type: 'stop'
+		});
+
+  	connection.send(message);
+
+}
+//********************************************************
+
+
+function saveAsExercise() {
+  return new Promise((resolve, reject) => {
+    // Recuperar los valores actuales de los campos de entrada
+    var desc = getExerciseDesc();
+    var ball = getBallMin();
+    var trt = getTraining();
+    var rest = getRest();
+    var cyc = getCycle();
+    var rndD = rndDist();
+    var rndP = rndPlace();
+  
+    // Asegúrate de que la descripción no sea la misma, añadiendo un sufijo o solicitando al usuario
+    var newDesc = prompt("Insert new Description", desc + " ...");
+    if (!newDesc) {
+      resolve(0); // Devolvemos 0 porque no se inserta un nuevo ejercicio
+      return;
+    }
+  
+    // Abrir una transacción en la base de datos y agregar el nuevo ejercicio
+    const transaction = db.transaction(['exercise'], 'readwrite');
+    const store = transaction.objectStore('exercise');
+  
+    // Crear un nuevo objeto para el nuevo ejercicio
+    const item = {
+      description: newDesc,
+      frequency: ball,
+      trainingtime: trt,
+      resttime: rest,
+      cycle: cyc,
+      drnd: rndD,
+      trnd: rndP,
+    };
+  
+    const request = store.add(item);
+    
+    request.onerror = function (e) {
+      console.log('Error al guardar el ejercicio como nuevo', e.target.error.name);
+      showMessage('Error to Store New Exercise');
+      resolve(0); // Error en la inserción, devolver 0
+    };
+  
+    request.onsuccess = function (e) {
+      console.log('Ejercicio guardado exitosamente como nuevo');
+      //showMessage("New Exercise Stored!");
+      resolve(1); // Ejercicio insertado correctamente, devolver 1
+    };
+  });
+}
+
+
+
+function getNextIdExercise() {
+  return new Promise((resolve, reject) => {
+    let lastId = 0;
+    let txn = db.transaction(['exercise'], "readonly");
+    let exercises = txn.objectStore('exercise');
+    let request = exercises.openCursor();
+
+    request.onsuccess = function(event) {
+      let cursor = event.target.result;
+
+      if (cursor) {
+        let key = Number(cursor.primaryKey); // Convertimos a número
+
+        if (lastId <= key) {
+          lastId = key;  // Guardamos el último ID como número
+        }
+        cursor.continue(); // Seguimos al siguiente registro
+      } else {
+        // Cuando no hay más registros, resolvemos la promesa
+        //resolve(lastId + 1); // Aseguramos que la suma sea numérica
+        resolve(lastId); 
+      }
+    };
+
+    request.onerror = function(event) {
+      reject('Error al acceder a los datos: ' + event.target.errorCode);
+    };
+  });
+}
+
+
+
+// Define la función para copiar bolas a un nuevo ejercicio
+function copyBallsToNewExercise(currentExerciseId, newExerciseId) {
+  
+  //alert ('Clave nuevo ejercicio: ' + newExerciseId);  
+ 
+  let txn = db.transaction(['exercise_ball'], "readonly");
+  let store = txn.objectStore('exercise_ball');
+  let request = store.openCursor();
+
+  request.onsuccess = function() {
+    let cursor = request.result;    
+    
+    if (cursor) {
+      let key = cursor.primaryKey; // Identificador único
+      let values = cursor.value;   // Valores del objeto
+                 
+      // Verifica si el ID del ejercicio coincide con el ejercicio actual
+       if (currentExerciseId === values.idex) {
+        // Obtén los parámetros de la bola
+        let ballnumber = values.idball;
+        let trajectory = values.trajectory;
+        let position = values.position;
+        let speed = values.speed;
+        let spinAngle = values.spinAngle;
+        let spinStren = values.spinStrength;
+        let rep = values.repetition;
+
+        // Abre una transacción para agregar los parámetros al nuevo ejercicio
+        let writeTxn = db.transaction(['exercise_ball'], 'readwrite');
+        let writeStore = writeTxn.objectStore('exercise_ball');
+        
+        
+        // Inserta los datos en el nuevo ejercicio
+        writeStore.add({
+          idex: newExerciseId,
+	  idball: ballnumber,
+          trajectory: trajectory,
+          position: position,
+          speed: speed,
+          spinAngle: spinAngle,
+          spinStrength: spinStren,
+          repetition: rep
+        });
+        
+  
+        writeTxn.oncomplete = function() {
+          console.log(`Bola ${ballnumber} copiada al nuevo ejercicio ${newExerciseId}`);
+        };
+
+        writeTxn.onerror = function(event) {
+          console.error('Error al copiar la bola:', event.target.error);
+        };
+      }
+
+      cursor.continue(); // Continua al siguiente objeto
+    }
+  };
+
+  request.onerror = function(event) {
+    console.error('Error al recorrer el cursor:', event.target.error);
+  };
+}
+
+
+//return de new exercise Id stored
+function getNextIdExercise() {
+  
+  return new Promise((resolve, reject) => {
+    var lastId = 0;
+
+    let txn = db.transaction(['exercise'], "readonly");
+    let exercises = txn.objectStore('exercise');
+    let request = exercises.openCursor();
+
+    request.onsuccess = function() {
+      let cursor = request.result;    
+
+      if (cursor) {
+        let key = cursor.primaryKey; // book key (id field)
+        if (lastId <= key) {
+          lastId = key;
+        }
+        cursor.continue();
+      } else {
+        resolve(lastId); // return last ID Exercise
+      }
+    };
+
+    request.onerror = function(event) {
+      reject(event.target.error);
+    };
+  });
+}
+
+
+
+
+async function saveAsExerciseBalls() {
+  // Esperar a que saveAsExercise termine y devuelva el resultado
+  const saveAsFlag = await saveAsExercise(); 
+
+  // Verificar si el ejercicio fue guardado correctamente
+  if (saveAsFlag === 1) {
+     let currentExerciseId = getSelectedExercise(); // Obtener el ID del ejercicio actual
+     let newExerciseId = await getNextIdExercise(); // Obtener el ID del nuevo ejercicio  
+    
+     // Llamar a la función para copiar las bolas
+     copyBallsToNewExercise(currentExerciseId, newExerciseId); 
+    
+     // Refrescar la lista de ejercicios
+     getDisplayExercises(); 
+    
+     showMessage("New Exercise Copied!");
+  } else 
+	{
+   	 showMessage("No Exercise Copied!");
+  	}
+}
+
+
+ var contextAudio = new (window.AudioContext || window.webkitAudioContext)();      
+      function makeBeep(dur,freq) {
+            
+        //var contextAudio = new (window.AudioContext || window.webkitAudioContext)();
+        var osc = contextAudio.createOscillator(); // instantiate an oscillator
+        osc.type = 'sine'; // this is the default - also square, sawtooth, triangle
+        osc.frequency.value = freq; // Hz
+        osc.connect(contextAudio.destination); // connect it to the destination
+        //osc.start(); // start the oscillator
+        osc.start(contextAudio.currentTime);
+        osc.stop(contextAudio.currentTime + dur); // stop 1 seconds after the current time
+        
+     }  
+
+
+
+
+
+ 
+ function showTimeout(to)
+ {
+ 	document.getElementById("ventCont").innerHTML=to;
+ }
+            
+ const sleepNow = (delay) => new Promise((resolve) => setTimeout(resolve, delay))
+
+
+async function alertRestEnd() {
+          
+      var i = 1;  
+      document.getElementById("ventCont").style.display="block";
+      document.getElementById("ventCont").innerHTML="3"; 
+      
+      for (let i = 1; i <= 6; i++) {
+	if (i == 1)
+	{ 
+           makeBeep(0.5,1000);  
+           showTimeout("5");
+	}
+	else {
+		if (i == 2)
+		{ 
+           		makeBeep(0.5,1000);  
+           		showTimeout("4");
+		}
+		else {
+			if (i == 3)
+			{
+           			makeBeep(0.5,1000);  
+           			showTimeout("3");	
+        		}
+        		else {
+               			if (i == 4)
+				{
+                  			makeBeep(0.5,1000);
+                  			showTimeout("2");
+               			}
+               			else {
+                     			if (i == 5) {
+                        			makeBeep(0.8,1500);
+                        			showTimeout("1");
+                     			}
+                     			else {
+                     	    			document.getElementById("ventCont").style.display="none";
+     			    			document.getElementById("ventCont").innerHTML="";
+                            			if (countIni == 0) {
+                               				timeOffset=0;
+                              
+                             			}
+                             			else {
+                                    			// startTimer(); 
+                                  		     }
+			   		      }
+                     		     }
+             		     }
+			}
+		}
+             	await sleepNow(800)
+       }//for
+}
+
+
+
+
+
+</script>
+</body> 
+</html>
+
+
