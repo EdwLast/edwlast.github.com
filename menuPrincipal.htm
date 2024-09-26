@@ -2062,7 +2062,8 @@ function downloadCSV(content, fileName) {
 }
 */
 
-
+/*
+//Solo funciona en SAFARI y graba en la nube, pero no funciona en Chrome ni en Firefox
 function downloadCSV(content, fileName) {
     showMessage('entro a generar el CSV V5');
     var blob = new Blob([content], { type: 'text/csv;charset=utf-8;' });
@@ -2083,7 +2084,31 @@ function downloadCSV(content, fileName) {
         }
     }
 }
+*/
 
+function downloadCSV(content, fileName) {
+    showMessage('entro a generar el CSV V6');
+    // Codificar el contenido como data URI
+    var csvContent = 'data:text/csv;charset=utf-8,' + encodeURIComponent(content);
+
+    // Detectar si estamos en Chrome o Firefox en iOS
+    if (navigator.userAgent.match(/CriOS|FxiOS/i)) {
+        // Abre el contenido en una nueva ventana
+        var newWindow = window.open();
+        newWindow.document.write('<pre>' + content + '</pre>');
+    } else {
+        // Para otros navegadores, intentar la descarga
+        var link = document.createElement("a");
+        if (link.download !== undefined) {
+            link.setAttribute("href", csvContent);
+            link.setAttribute("download", fileName);
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+    }
+}
 
 
 function importData() {
