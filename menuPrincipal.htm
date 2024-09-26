@@ -2053,13 +2053,37 @@ function downloadCSV(content, fileName) {
 }
 */
 
-
+/*
 //No anda
 function downloadCSV(content, fileName) {
     showMessage('entro a generar el CSV V4');
     var blob = new Blob([content], { type: 'text/csv;charset=utf-8;' });
     saveAs(blob, fileName);
 }
+*/
+
+
+function downloadCSV(content, fileName) {
+    showMessage('entro a generar el CSV V5');
+    var blob = new Blob([content], { type: 'text/csv;charset=utf-8;' });
+    if (navigator.userAgent.match(/CriOS|FxiOS/i)) {
+        // Mostrar el CSV en una nueva pestaña para Firefox y Chrome en iOS
+        var csvUrl = URL.createObjectURL(blob);
+        window.open(csvUrl);
+    } else {
+        var link = document.createElement("a");
+        if (link.download !== undefined) {
+            var url = URL.createObjectURL(blob);
+            link.setAttribute("href", url);
+            link.setAttribute("download", fileName);
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+    }
+}
+
 
 
 function importData() {
