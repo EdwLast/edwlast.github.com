@@ -354,6 +354,17 @@ textarea {
 }
 
 
+ input[type="range"] {
+            width: 250px; /* Cambia el tamaño según tus necesidades */
+            height: 10px; /* Cambia la altura */
+        }
+
+        /* Personalizar la pista del slider */
+        input[type="range"]::-webkit-slider-runnable-track {
+            height: 10px; /* Cambia la altura de la pista */
+        }
+
+
 </style>
  <title>Table Tennis Robot Controller</title>
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -416,7 +427,6 @@ textarea {
 
 
 <div class="slidecontainer">
-  <!-- <label for="myTrajectory">Trajectory</label> -->
   <p>Ball x min</p>
   <button id="minusFr">-</button>
   <input type="range" min="30" max="100" value="30" class="slider" step="10" list="frequencytick" id="myFrequency">
@@ -531,7 +541,7 @@ textarea {
 
 
 <!-- //-------------------------Ball Adjust------------------------------------------------------- -->
-<br>
+
 <a class="button buttonBallValues" href="#hide" id="hide" onClick="newExercise('Cancel')"> + Ball Adjust</a>
   <a class="button buttonBallValues" href="#" id="show">-- Ball Adjust</a>  
   
@@ -562,7 +572,6 @@ textarea {
 
    					
 <div class="slidecontainer">
-  <!-- <label for="myTrajectory">Trajectory</label> -->
   <p>Trajectory:</p>
   <button id="minusTr">-</button>
   <input type="range" min="1" max="20" value="10" class="slider" step="1" list="trajectorytick" id="myTrajectory" 
