@@ -1983,30 +1983,6 @@ function exportExerciseBall() {
 
 
 
-//NO anda
-function downloadCSV(content, fileName) {
-    showMessage('entro a generar el CSV');
-    var blob = new Blob([content], { type: 'text/csv;charset=utf-8;' });
-    if (navigator.userAgent.match(/CriOS|FxiOS/i)) {
-        // Mostrar el CSV en una nueva pestaña para Firefox y Chrome en iOS
-        var csvUrl = URL.createObjectURL(blob);
-        window.open(csvUrl);
-    } else {
-        var link = document.createElement("a");
-        if (link.download !== undefined) {
-            var url = URL.createObjectURL(blob);
-            link.setAttribute("href", url);
-            link.setAttribute("download", fileName);
-            link.style.visibility = 'hidden';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        }
-    }
-}
-
-
-
 /*
 //Original
 function downloadCSV(content, fileName) {
@@ -2029,6 +2005,8 @@ function downloadCSV(content, fileName) {
 /*
 //Esto funciona solo usando SAFARI, pero no puedo usar SAFARI porque no me guarda los datos en IndexedDB si cierro el navegador
 function downloadCSV(content, fileName) {
+    
+    showMessage('entro a generar el CSV V2');
     var blob = new Blob([content], { type: 'text/csv;charset=utf-8;' });
     var link = document.createElement("a");
     
