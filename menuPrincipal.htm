@@ -2086,6 +2086,7 @@ function downloadCSV(content, fileName) {
 }
 */
 
+/*
 function downloadCSV(content, fileName) {
     showMessage('entro a generar el CSV V6');
     // Codificar el contenido como data URI
@@ -2109,7 +2110,14 @@ function downloadCSV(content, fileName) {
         }
     }
 }
+*/
 
+function sendCSVByEmail(content, fileName) {
+    var csvContent = encodeURIComponent(content);
+    var mailtoLink = "mailto:?subject=" + encodeURIComponent(fileName) +
+                     "&body=" + csvContent;
+    window.location.href = mailtoLink;
+}
 
 function importData() {
   const importCsv = document.getElementById("import-csv");
