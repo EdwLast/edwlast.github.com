@@ -369,6 +369,7 @@ textarea {
  <title>Table Tennis Robot Controller</title>
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 </head>
 
 <body>
@@ -2024,7 +2025,7 @@ function downloadCSV(content, fileName) {
 */
 
 
-
+/*
 //Esto funciona solo usando SAFARI, pero no puedo usar SAFARI porque no me guarda los datos en IndexedDB si cierro el navegador
 function downloadCSV(content, fileName) {
     var blob = new Blob([content], { type: 'text/csv;charset=utf-8;' });
@@ -2047,6 +2048,13 @@ function downloadCSV(content, fileName) {
             document.body.removeChild(link);
         }
     }
+}
+*/
+
+
+function downloadCSV(content, fileName) {
+    var blob = new Blob([content], { type: 'text/csv;charset=utf-8;' });
+    saveAs(blob, fileName);
 }
 
 
