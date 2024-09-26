@@ -2112,12 +2112,41 @@ function downloadCSV(content, fileName) {
 }
 */
 
-function sendCSVByEmail(content, fileName) {
+
+/*
+//Funciona pero envia un correo con el contenido de los datos 
+function downloadCSV(content, fileName) {
+    showMessage('via mail');
     var csvContent = encodeURIComponent(content);
     var mailtoLink = "mailto:?subject=" + encodeURIComponent(fileName) +
                      "&body=" + csvContent;
     window.location.href = mailtoLink;
 }
+*/
+
+function downloadCSV(content, fileName) {
+    // Codificar el contenido como data URI
+    var csvContent = 'data:text/csv;charset=utf-8,' + encodeURIComponent(content);
+
+    // Detectar si estamos en Chrome o Firefox en iOS
+    if (navigator.userAgent.match(/CriOS|FxiOS/i)) {
+        // Abre el contenido en una nueva ventana
+        var newWindow = window.open();
+        newWindow.document.write('<pre>' + content + '</pre>');
+    } else {
+        // Para otros navegadores, intentar la descarga
+        var link = document.createElement("a");
+        if (link.download !== undefined) {
+            link.setAttribute("href", csvContent);
+            link.setAttribute("download", fileName);
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+    }
+}
+
 
 function importData() {
   const importCsv = document.getElementById("import-csv");
