@@ -1981,6 +1981,7 @@ function exportExerciseBall() {
 }
 
 
+/*
 function downloadCSV(content, fileName) {
     var blob = new Blob([content], { type: 'text/csv;charset=utf-8;' });
     var link = document.createElement("a");
@@ -1993,6 +1994,28 @@ function downloadCSV(content, fileName) {
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
+    }
+}
+*/
+
+
+function downloadCSV(content, fileName) {
+    var blob = new Blob([content], { type: 'text/csv;charset=utf-8;' });
+    if (navigator.userAgent.match(/CriOS|iPhone|iPad|iPod/i)) {
+        // Mostrar el CSV en una nueva pestaña
+        var csvUrl = URL.createObjectURL(blob);
+        window.open(csvUrl);
+    } else {
+        var link = document.createElement("a");
+        if (link.download !== undefined) {
+            var url = URL.createObjectURL(blob);
+            link.setAttribute("href", url);
+            link.setAttribute("download", fileName);
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
     }
 }
 
