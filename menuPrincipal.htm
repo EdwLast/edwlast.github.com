@@ -2001,12 +2001,15 @@ function downloadCSV(content, fileName) {
 
 function downloadCSV(content, fileName) {
     var blob = new Blob([content], { type: 'text/csv;charset=utf-8;' });
+    var link = document.createElement("a");
+    
+    // Para Safari iOS: Detectar el entorno
     if (navigator.userAgent.match(/CriOS|iPhone|iPad|iPod/i)) {
-        // Mostrar el CSV en una nueva pestaña
-        var csvUrl = URL.createObjectURL(blob);
-        window.open(csvUrl);
+        // Usa msSaveOrOpenBlob para descargar en iOS
+        window.navigator.msSaveOrOpenBlob ? window.navigator.msSaveOrOpenBlob(blob, fileName) :
+        alert('El navegador no soporta la descarga automática. Intenta usar otro navegador.');
     } else {
-        var link = document.createElement("a");
+        // Para otros navegadores
         if (link.download !== undefined) {
             var url = URL.createObjectURL(blob);
             link.setAttribute("href", url);
