@@ -1982,9 +1982,10 @@ function exportExerciseBall() {
 }
 
 
-/*
+
 //NO anda
 function downloadCSV(content, fileName) {
+    showMessage('entro a generar el CSV');
     var blob = new Blob([content], { type: 'text/csv;charset=utf-8;' });
     if (navigator.userAgent.match(/CriOS|FxiOS/i)) {
         // Mostrar el CSV en una nueva pestaña para Firefox y Chrome en iOS
@@ -2003,7 +2004,7 @@ function downloadCSV(content, fileName) {
         }
     }
 }
-*/
+
 
 
 /*
@@ -2051,12 +2052,13 @@ function downloadCSV(content, fileName) {
 }
 */
 
-
+/*
+//No anda
 function downloadCSV(content, fileName) {
     var blob = new Blob([content], { type: 'text/csv;charset=utf-8;' });
     saveAs(blob, fileName);
 }
-
+*/
 
 function importData() {
   const importCsv = document.getElementById("import-csv");
