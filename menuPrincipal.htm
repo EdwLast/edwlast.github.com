@@ -2053,30 +2053,6 @@ function downloadCSV(content, fileName) {
 }
 */
 
-//Esto funciona solo usando SAFARI, pero no puedo usar SAFARI porque no me guarda los datos en IndexedDB si cierro el navegador
-function downloadCSV(content, fileName) {
-    
-    var blob = new Blob([content], { type: 'text/csv;charset=utf-8;' });
-    var link = document.createElement("a");
-    
-    
-        // Usa msSaveOrOpenBlob para descargar en iOS
-        window.navigator.msSaveOrOpenBlob ? window.navigator.msSaveOrOpenBlob(blob, fileName) :
-        alert('El navegador no soporta la descarga automática. Intenta usar otro navegador.');
-     
-        
-            var url = URL.createObjectURL(blob);
-            link.setAttribute("href", url);
-            link.setAttribute("download", fileName);
-            link.style.visibility = 'hidden';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-       
- }
-
-
-
 /*
 //No anda
 function downloadCSV(content, fileName) {
@@ -2337,6 +2313,25 @@ function downloadCSV(content, fileName) {
 }
 */
 
+
+function downloadCSV(content, fileName) {
+   showMessage('entro a generar el CSV 13'); 
+   var csvData = 'data:text/csv;charset=utf-8,' + encodeURIComponent(content);
+    var link = document.createElement("a");
+
+    if (navigator.userAgent.match(/CriOS|FxiOS/i)) {
+        // Mostrar el CSV en una nueva pestaña en Chrome/Firefox en iOS
+        window.open(csvData);
+    } else {
+        // Para otros navegadores, intenta descargar automáticamente el archivo CSV
+        link.setAttribute("href", csvData);
+        link.setAttribute("download", fileName);
+        link.style.visibility = 'hidden';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
+}
 
 
 function importData() {
