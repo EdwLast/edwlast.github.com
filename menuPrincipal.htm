@@ -2294,7 +2294,8 @@ function downloadCSV(content, fileName) {
 }
 */
 
-
+/*
+Abre un BLOB con los datos solo de los ejercicios
 function downloadCSV(content, fileName) {
     showMessage('entro a generar el CSV 11');
     var blob = new Blob([content], { type: 'text/csv;charset=utf-8;' });
@@ -2309,6 +2310,31 @@ function downloadCSV(content, fileName) {
         link.click();
         document.body.removeChild(link); // Remover el enlace después de la descarga
    
+}
+*/
+
+function downloadCSV(content, fileName) {
+    showMessage('Generando el CSV 12');
+    var blob = new Blob([content], { type: 'text/csv;charset=utf-8;' });
+
+    // Crear el enlace de descarga
+    var link = document.createElement("a");
+    var url = window.URL.createObjectURL(blob);
+    link.setAttribute("href", url);
+    link.setAttribute("download", fileName);
+    link.style.visibility = 'hidden';
+    document.body.appendChild(link);
+    
+    // Intentar descargar el archivo
+    try {
+        link.click(); // Intentar la descarga automática
+    } catch (e) {
+        console.log("Error en la descarga automática, intentando abrir en una nueva pestaña.");
+        // Si la descarga automática falla, abrir el archivo en una nueva pestaña
+        window.open(url, '_blank');
+    }
+
+    document.body.removeChild(link); // Remover el enlace después de la descarga
 }
 
 
