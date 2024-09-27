@@ -2313,7 +2313,8 @@ function downloadCSV(content, fileName) {
 }
 */
 
-
+/*
+//No funciono pero abrió nuevas pestañas en Firefox solamente
 function downloadCSV(content, fileName) {
    showMessage('entro a generar el CSV 13'); 
    var csvData = 'data:text/csv;charset=utf-8,' + encodeURIComponent(content);
@@ -2330,6 +2331,28 @@ function downloadCSV(content, fileName) {
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
+    }
+}
+*/
+
+function downloadCSV(content, fileName) {
+    var csvData = 'data:text/csv;charset=utf-8,' + encodeURIComponent(content);
+
+    // Para navegadores en iOS (Chrome y Firefox)
+    if (navigator.userAgent.match(/CriOS|FxiOS/i)) {
+        var newWindow = window.open();  // Abrir una nueva ventana
+        newWindow.document.write('<pre>' + content + '</pre>');  // Mostrar el CSV como texto
+        newWindow.document.title = fileName;  // Asignar el nombre del archivo como título
+        alert('El archivo CSV está en la nueva pestaña. Puedes copiarlo manualmente.');
+    } else {
+        // Para otros navegadores, intenta descargar automáticamente el archivo CSV
+        var link = document.createElement("a");
+        link.setAttribute("href", csvData);
+        link.setAttribute("download", fileName);  // Nombre del archivo CSV
+        link.style.visibility = 'hidden';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);  // Remover el enlace después de la descarga
     }
 }
 
