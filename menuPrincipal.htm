@@ -2239,6 +2239,8 @@ function downloadCSV(content, fileName) {
 }
 */
 
+/*
+No funciono
 function downloadCSV(content, fileName) {
     showMessage('entro a generar el CSV 10');
     var blob = new Blob([content], { type: 'text/csv;charset=utf-8;' });
@@ -2262,6 +2264,34 @@ function downloadCSV(content, fileName) {
         }
     }
 }
+*/
+
+
+function downloadCSV(content, fileName) {
+    var blob = new Blob([content], { type: 'text/csv;charset=utf-8;' });
+    var isIOS = !!navigator.userAgent.match(/CriOS|FxiOS/i); // Detectar Chrome y Firefox en iOS
+
+    if (isIOS) {
+        // Para Chrome o Firefox en iOS, mostrar el CSV en una nueva pestaña
+        var csvUrl = window.URL.createObjectURL(blob);
+        var newWindow = window.open(csvUrl, '_blank'); // Abrir en una nueva pestaña
+
+        if (newWindow === null || typeof newWindow === 'undefined') {
+            alert('Por favor, habilite los pop-ups en este sitio para descargar el archivo.');
+        }
+    } else {
+        // Para otros navegadores, descargar el archivo CSV automáticamente
+        var link = document.createElement("a");
+        var url = window.URL.createObjectURL(blob);
+        link.setAttribute("href", url);
+        link.setAttribute("download", fileName); // Nombre del archivo CSV
+        link.style.visibility = 'hidden';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link); // Remover el enlace después de la descarga
+    }
+}
+
 
 
 function importData() {
