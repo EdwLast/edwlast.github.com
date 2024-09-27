@@ -2266,7 +2266,8 @@ function downloadCSV(content, fileName) {
 }
 */
 
-
+/*
+//NO grabó, pero en firefox me solicita habilitar los pop-ups. NO logré habilitarlos!
 function downloadCSV(content, fileName) {
     var blob = new Blob([content], { type: 'text/csv;charset=utf-8;' });
     var isIOS = !!navigator.userAgent.match(/CriOS|FxiOS/i); // Detectar Chrome y Firefox en iOS
@@ -2291,7 +2292,37 @@ function downloadCSV(content, fileName) {
         document.body.removeChild(link); // Remover el enlace después de la descarga
     }
 }
+*/
 
+
+function downloadCSV(content, fileName) {
+    showMessage('entro a generar el CSV 11');
+    var blob = new Blob([content], { type: 'text/csv;charset=utf-8;' });
+    var isIOS = !!navigator.userAgent.match(/CriOS|FxiOS/i); // Detectar Chrome y Firefox en iOS
+
+    if (isIOS) {
+        // Chrome y Firefox en iOS no permiten descargas automáticas
+        var csvUrl = window.URL.createObjectURL(blob);
+        var newWindow = window.open(csvUrl, '_blank');
+
+        if (newWindow === null || typeof newWindow === 'undefined') {
+            alert('Por favor, habilite los pop-ups en este sitio para descargar el archivo.');
+        } else {
+            // Mostrar instrucciones para que el usuario guarde el archivo manualmente
+            alert('Haga clic en el botón de compartir y seleccione "Guardar en archivos" o "Guardar en iCloud Drive".');
+        }
+    } else {
+        // Para otros navegadores, intenta descargar automáticamente el archivo CSV
+        var link = document.createElement("a");
+        var url = window.URL.createObjectURL(blob);
+        link.setAttribute("href", url);
+        link.setAttribute("download", fileName); // Nombre del archivo CSV
+        link.style.visibility = 'hidden';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link); // Remover el enlace después de la descarga
+    }
+}
 
 
 function importData() {
