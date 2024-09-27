@@ -2169,6 +2169,8 @@ function downloadCSV(content, fileName) {
 }
 */
 
+/*
+//No funciono
 function downloadCSV(content, fileName) {
     showMessage('entro a generar el CSV V8!');
     // Detectar si estamos en iOS (Chrome o Firefox)
@@ -2198,6 +2200,38 @@ function downloadCSV(content, fileName) {
         // Ejecutar la descarga
         downloadLink.click();
         
+        // Eliminar el enlace del DOM
+        document.body.removeChild(downloadLink);
+    }
+}
+*/
+
+
+function downloadCSV(content, fileName) {
+     showMessage('entro a generar el CSV V9');
+    // Crear el blob con el contenido CSV
+    var blob = new Blob([content], { type: 'text/csv;charset=utf-8;' });
+    
+    // Detectar si estamos en iOS (Chrome o Firefox)
+    var isIOS = !!navigator.userAgent.match(/CriOS|FxiOS/i);
+    
+    // Crear un enlace temporal para mostrar el archivo
+    var downloadLink = document.createElement("a");
+
+    if (isIOS) {
+        // En iOS (Chrome y Firefox), abrimos el archivo en una nueva pestaña
+        var csvUrl = URL.createObjectURL(blob);
+        window.open(csvUrl, '_blank'); // Abre el archivo en una nueva pestaña
+    } else {
+        // Para otros navegadores, proceder con la descarga automática
+        downloadLink.download = fileName;
+        downloadLink.href = URL.createObjectURL(blob);
+        downloadLink.style.display = "none";
+        document.body.appendChild(downloadLink);
+
+        // Ejecutar la descarga
+        downloadLink.click();
+
         // Eliminar el enlace del DOM
         document.body.removeChild(downloadLink);
     }
