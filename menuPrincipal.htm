@@ -2206,7 +2206,8 @@ function downloadCSV(content, fileName) {
 }
 */
 
-
+/*
+//NO funciono
 function downloadCSV(content, fileName) {
      showMessage('entro a generar el CSV V9');
     // Crear el blob con el contenido CSV
@@ -2236,7 +2237,31 @@ function downloadCSV(content, fileName) {
         document.body.removeChild(downloadLink);
     }
 }
+*/
 
+function downloadCSV(content, fileName) {
+    showMessage('entro a generar el CSV 10');
+    var blob = new Blob([content], { type: 'text/csv;charset=utf-8;' });
+    var isIOS = !!navigator.userAgent.match(/CriOS|FxiOS/i); // Detectar Chrome y Firefox en iOS
+
+    if (isIOS) {
+        // Para Chrome o Firefox en iOS, abrir el archivo en una nueva pestaña
+        var csvUrl = window.URL.createObjectURL(blob);
+        window.open(csvUrl, '_blank'); // Abrir en nueva pestaña, desde donde el usuario puede guardar el archivo manualmente
+    } else {
+        // Para otros navegadores, descargar automáticamente el CSV
+        var link = document.createElement("a");
+        if (link.download !== undefined) { // Característica de descarga soportada
+            var url = window.URL.createObjectURL(blob);
+            link.setAttribute("href", url);
+            link.setAttribute("download", fileName); // Nombre del archivo CSV
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link); // Remover el enlace del DOM después de la descarga
+        }
+    }
+}
 
 
 function importData() {
