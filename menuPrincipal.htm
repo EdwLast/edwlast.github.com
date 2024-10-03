@@ -2723,7 +2723,7 @@ function saveAsExercise() {
     var rndP = rndPlace();
   
     // Asegúrate de que la descripción no sea la misma, añadiendo un sufijo o solicitando al usuario
-    var newDesc = prompt("Insert new Description", desc + " ...");
+    var newDesc = prompt("Insert new Description", desc);
     if (!newDesc) {
       resolve(0); // Devolvemos 0 porque no se inserta un nuevo ejercicio
       return;
@@ -2781,8 +2781,8 @@ function getNextIdExercise() {
         cursor.continue(); // Seguimos al siguiente registro
       } else {
         // Cuando no hay más registros, resolvemos la promesa
-        //resolve(lastId + 1); // Aseguramos que la suma sea numérica
-        resolve(lastId); 
+        resolve(lastId + 1); // Aseguramos que la suma sea numérica
+        //resolve(lastId); 
       }
     };
 
@@ -2858,6 +2858,7 @@ function copyBallsToNewExercise(currentExerciseId, newExerciseId) {
 }
 
 
+/*
 //return de new exercise Id stored
 function getNextIdExercise() {
   
@@ -2887,7 +2888,7 @@ function getNextIdExercise() {
     };
   });
 }
-
+*/
 
 
 
