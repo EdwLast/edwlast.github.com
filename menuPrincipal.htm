@@ -1381,7 +1381,10 @@ function addItem() {
   var rndD = rndDist();
   var rndP = rndPlace();
   
+  let newExerciseId = await getNextIdExercise(); // Obtener el ID del nuevo ejercicio  
+
   const item = {
+    id: newExerciseId,
     description: desc,
     frequency: ball,
     trainingtime: trt,
@@ -2732,9 +2735,13 @@ function saveAsExercise() {
     // Abrir una transacción en la base de datos y agregar el nuevo ejercicio
     const transaction = db.transaction(['exercise'], 'readwrite');
     const store = transaction.objectStore('exercise');
-  
-    // Crear un nuevo objeto para el nuevo ejercicio
+
+    let newExerciseId = await getLastIdExercise(); // Obtener el ID del nuevo ejercicio
+    newExerciseId = newExerciseId + 1;
+
+     // Crear un nuevo objeto para el nuevo ejercicio
     const item = {
+      id: newExerciseId,
       description: newDesc,
       frequency: ball,
       trainingtime: trt,
@@ -2762,7 +2769,7 @@ function saveAsExercise() {
 
 
 
-function getNextIdExercise() {
+function getLastIdExercise() {
   return new Promise((resolve, reject) => {
     let lastId = 0;
     let txn = db.transaction(['exercise'], "readonly");
@@ -2781,8 +2788,8 @@ function getNextIdExercise() {
         cursor.continue(); // Seguimos al siguiente registro
       } else {
         // Cuando no hay más registros, resolvemos la promesa
-        resolve(lastId + 1); // Aseguramos que la suma sea numérica
-        //resolve(lastId); 
+        //resolve(lastId + 1); // Aseguramos que la suma sea numérica
+        resolve(lastId); 
       }
     };
 
@@ -2899,10 +2906,11 @@ async function saveAsExerciseBalls() {
   // Verificar si el ejercicio fue guardado correctamente
   if (saveAsFlag === 1) {
      let currentExerciseId = getSelectedExercise(); // Obtener el ID del ejercicio actual
-     let newExerciseId = await getNextIdExercise(); // Obtener el ID del nuevo ejercicio  
+     let lastExerciseId = await getLastIdExercise(); // Obtener el ID del ultimo ejercicio  
+     
     
      // Llamar a la función para copiar las bolas
-     copyBallsToNewExercise(currentExerciseId, newExerciseId); 
+     copyBallsToNewExercise(currentExerciseId, lastExerciseId); 
     
      // Refrescar la lista de ejercicios
      getDisplayExercises(); 
