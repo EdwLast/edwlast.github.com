@@ -2818,7 +2818,7 @@ function copyBallsToNewExercise(currentExerciseId, newExerciseId) {
       let values = cursor.value;   // Valores del objeto
                  
       // Verifica si el ID del ejercicio coincide con el ejercicio actual
-       if (currentExerciseId === values.idex) {
+      if (currentExerciseId == values.idex) {  //===
         // Obtén los parámetros de la bola
         let ballnumber = values.idball;
         let trajectory = values.trajectory;
@@ -2829,12 +2829,12 @@ function copyBallsToNewExercise(currentExerciseId, newExerciseId) {
         let rep = values.repetition;
 
         // Abre una transacción para agregar los parámetros al nuevo ejercicio
-        let writeTxn = db.transaction(['exercise_ball'], 'readwrite');
-        let writeStore = writeTxn.objectStore('exercise_ball');
+        const transaction = db.transaction(['exercise_ball'], 'readwrite');
+        const store = transaction.objectStore('exercise_ball');
         
-        
-        // Inserta los datos en el nuevo ejercicio
-        writeStore.add({
+            
+	// Inserta los datos en el nuevo ejercicio
+        const item = {
           idex: newExerciseId,
 	  idball: ballnumber,
           trajectory: trajectory,
@@ -2842,15 +2842,17 @@ function copyBallsToNewExercise(currentExerciseId, newExerciseId) {
           speed: speed,
           spinAngle: spinAngle,
           spinStrength: spinStren,
-          repetition: rep
-        });
-        
+          repetition: rep,
+          };
+          
+        // Inserta los datos en el nuevo ejercicio
+        const request = store.add(item);
   
-        writeTxn.oncomplete = function() {
+        request.onsuccess = function() {
           console.log(`Bola ${ballnumber} copiada al nuevo ejercicio ${newExerciseId}`);
         };
 
-        writeTxn.onerror = function(event) {
+        request.onerror = function(event) {
           console.error('Error al copiar la bola:', event.target.error);
         };
       }
