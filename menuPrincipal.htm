@@ -2343,10 +2343,14 @@ function downloadCSV(content, fileName) {
 
     // Para navegadores en iOS (Chrome y Firefox)
     if (navigator.userAgent.match(/CriOS|FxiOS/i)) {
-        var newWindow = window.open();  // Abrir una nueva ventana
-        newWindow.document.write('<pre>' + content + '</pre>');  // Mostrar el CSV como texto
-        newWindow.document.title = fileName;  // Asignar el nombre del archivo como título
-        alert('El archivo CSV está en la nueva pestaña. Puedes copiarlo manualmente.');
+        //var newWindow = window.open();  // Abrir una nueva ventana
+        //newWindow.document.write('<pre>' + content + '</pre>');  // Mostrar el CSV como texto
+        //newWindow.document.title = fileName;  // Asignar el nombre del archivo como título
+        //alert('El archivo CSV está en la nueva pestaña. Puedes copiarlo manualmente.');
+	showMessage('via mail');
+    	var csvContent = encodeURIComponent(content);
+    	var mailtoLink = "mailto:?subject=" + encodeURIComponent(fileName) + "&body=" + csvContent;
+    	window.location.href = mailtoLink;	
     } else {
         // Para otros navegadores, intenta descargar automáticamente el archivo CSV
         var link = document.createElement("a");
