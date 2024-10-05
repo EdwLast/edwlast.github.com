@@ -779,6 +779,20 @@ let ballPrimaryKey = 0;
 
 let saveAsFlag = 0;
 
+
+//****Disable ZOOM***********//
+document.addEventListener('touchstart', function(event) {
+    if (event.touches.length > 1) {
+        event.preventDefault(); // Evitar el zoom de pellizco
+    }
+}, { passive: false });
+
+document.addEventListener('gesturestart', function(event) {
+    event.preventDefault(); // Evitar el zoom de gesto
+});
+
+
+
 //----variables para el dibujo de los efectos en la bola
 
 const circle = document.getElementById('circle');
