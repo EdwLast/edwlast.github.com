@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1", user-scalable=no, maximum-scale=1.0">
   <meta charset="UTF-8">
   
 <style>
@@ -353,15 +353,35 @@ textarea {
   transform: translate(-50%, -50%);
 }
 
+.slidecontainer button {
+    width: 40px;    /* Ancho del botón */
+    height: 25px;   /* Altura del botón */
+    font-size: 17px; /* Tamaño de fuente para el texto del botón */
+    border-radius: 40%; /* Bordes redondeados para hacerlos circulares */
+    background-color: #1c84ed; /* Color de fondo del botón */
+    color: white;    /* Color del texto */
+    border: none;    /* Elimina el borde predeterminado */
+    //cursor: pointer; /* Cambia el cursor a pointer */
+}
+
+.slidecontainer button:hover {
+    background-color: #0056b3; /* Color más oscuro al pasar el mouse */
+    color: white; 
+}
+
 
  input[type="range"] {
             width: 250px; /* Cambia el tamaño según tus necesidades */
             height: 10px; /* Cambia la altura */
+            //border-radius: 30px; /* Bordes redondeados del track */
+	    //border-radius: 50%;			
         }
 
         /* Personalizar la pista del slider */
         input[type="range"]::-webkit-slider-runnable-track {
-            height: 10px; /* Cambia la altura de la pista */
+        height: 10px; /* Cambia la altura de la pista */
+	//border-radius: 30px; /* Bordes redondeados del track */
+	//border-radius: 50%;
         }
 
 
@@ -431,7 +451,7 @@ textarea {
   <p>Ball x min</p>
   <button id="minusFr">-</button>
   <input type="range" min="30" max="100" value="30" class="slider" step="10" list="frequencytick" id="myFrequency">
-  <button  id="plusFr">+</button>
+  <button id="plusFr">+</button>
   <output for="myFrequency" id="outputFr">30</output>
   <datalist id="frequencytick">
     <option value="30" label="30"></option>
@@ -1920,7 +1940,7 @@ function showMessage(msg) {
  
   setTimeout(function() {
    element.style.display = 'none';
-  },1500);
+  },1800);
 }	 
 
 
@@ -1986,358 +2006,6 @@ function exportExerciseBall() {
 
 
 
-/*
-//Original
-function downloadCSV(content, fileName) {
-    var blob = new Blob([content], { type: 'text/csv;charset=utf-8;' });
-    var link = document.createElement("a");
-    if (link.download !== undefined) {
-        // Navegadores modernos
-        var url = URL.createObjectURL(blob);
-        link.setAttribute("href", url);
-        link.setAttribute("download", fileName);
-        link.style.visibility = 'hidden';
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-    }
-}
-*/
-
-/*
-function downloadCSV(content, fileName) {
-    showMessage('entro a generar el CSV V3');
-    var blob = new Blob([content], { type: 'text/csv;charset=utf-8;' });
-    if (navigator.userAgent.match(/CriOS|iPhone|iPad|iPod/i)) {
-        // Mostrar el CSV en una nueva pestaña
-        var csvUrl = URL.createObjectURL(blob);
-        window.open(csvUrl);
-    } else {
-        var link = document.createElement("a");
-        if (link.download !== undefined) {
-            var url = URL.createObjectURL(blob);
-            link.setAttribute("href", url);
-            link.setAttribute("download", fileName);
-            link.style.visibility = 'hidden';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        }
-    }
-}
-*/
-
-
-
-/*
-//Esto funciona solo usando SAFARI, pero no puedo usar SAFARI porque no me guarda los datos en IndexedDB si cierro el navegador
-function downloadCSV(content, fileName) {
-    
-    var blob = new Blob([content], { type: 'text/csv;charset=utf-8;' });
-    var link = document.createElement("a");
-    
-    // Para Safari iOS: Detectar el entorno
-    if (navigator.userAgent.match(/CriOS|iPhone|iPad|iPod/i)) {
-        // Usa msSaveOrOpenBlob para descargar en iOS
-        window.navigator.msSaveOrOpenBlob ? window.navigator.msSaveOrOpenBlob(blob, fileName) :
-        alert('El navegador no soporta la descarga automática. Intenta usar otro navegador.');
-    } else {
-        // Para otros navegadores
-        if (link.download !== undefined) {
-            var url = URL.createObjectURL(blob);
-            link.setAttribute("href", url);
-            link.setAttribute("download", fileName);
-            link.style.visibility = 'hidden';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        }
-    }
-}
-*/
-
-/*
-//No anda
-function downloadCSV(content, fileName) {
-    showMessage('entro a generar el CSV V4');
-    var blob = new Blob([content], { type: 'text/csv;charset=utf-8;' });
-    saveAs(blob, fileName);
-}
-*/
-
-
-
-/*
-function downloadCSV(content, fileName) {
-    showMessage('entro a generar el CSV V6');
-    // Codificar el contenido como data URI
-    var csvContent = 'data:text/csv;charset=utf-8,' + encodeURIComponent(content);
-
-    // Detectar si estamos en Chrome o Firefox en iOS
-    if (navigator.userAgent.match(/CriOS|FxiOS/i)) {
-        // Abre el contenido en una nueva ventana
-        var newWindow = window.open();
-        newWindow.document.write('<pre>' + content + '</pre>');
-    } else {
-        // Para otros navegadores, intentar la descarga
-        var link = document.createElement("a");
-        if (link.download !== undefined) {
-            link.setAttribute("href", csvContent);
-            link.setAttribute("download", fileName);
-            link.style.visibility = 'hidden';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        }
-    }
-}
-*/
-
-
-/*
-//Funciona pero envia un correo con el contenido de los datos 
-function downloadCSV(content, fileName) {
-    showMessage('via mail');
-    var csvContent = encodeURIComponent(content);
-    var mailtoLink = "mailto:?subject=" + encodeURIComponent(fileName) +
-                     "&body=" + csvContent;
-    window.location.href = mailtoLink;
-}
-*/
-
-/*
-function downloadCSV(content, fileName) {
-    // Codificar el contenido como data URI
-    var csvContent = 'data:text/csv;charset=utf-8,' + encodeURIComponent(content);
-
-    // Detectar si estamos en Chrome o Firefox en iOS
-    if (navigator.userAgent.match(/CriOS|FxiOS/i)) {
-        // Abre el contenido en una nueva ventana
-        var newWindow = window.open();
-        newWindow.document.write('<pre>' + content + '</pre>');
-    } else {
-        // Para otros navegadores, intentar la descarga
-        var link = document.createElement("a");
-        if (link.download !== undefined) {
-            link.setAttribute("href", csvContent);
-            link.setAttribute("download", fileName);
-            link.style.visibility = 'hidden';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        }
-    }
-}
-*/
-
-/*
-//No anda
-function downloadCSV(content, fileName) {
-    showMessage('entro a generar el CSV V7');
-    // Detectar si estamos en iOS (Chrome o Firefox)
-    var isIOS = !!navigator.userAgent.match(/CriOS|FxiOS/i);
-    
-    // Crear el blob con el contenido CSV
-    var blob = new Blob([content], { type: 'text/csv;charset=utf-8;' });
-    
-    if (typeof(Blob) !== 'undefined') {
-        // Si estamos en iOS con Chrome o Firefox, mostramos el archivo en una nueva pestaña
-        if (isIOS) {
-            var csvUrl = URL.createObjectURL(blob);
-            window.open(csvUrl, '_blank');  // Abre el CSV en una nueva pestaña
-        } else {
-            // Para otros navegadores, proceder con la descarga
-            var downloadLink = document.createElement("a");
-            downloadLink.download = fileName;
-            downloadLink.href = URL.createObjectURL(blob);
-            downloadLink.style.display = "none";
-            document.body.appendChild(downloadLink);
-            
-            // Ejecutar la descarga
-            downloadLink.click();
-            
-            // Eliminar el enlace del DOM
-            document.body.removeChild(downloadLink);
-        }
-    } else {
-        // Alternativa: usando Data URI si Blob no está disponible
-        var pp = document.createElement('a');
-        pp.setAttribute('href', 'data:text/csv;charset=utf-8,' + encodeURIComponent(content));
-        pp.setAttribute('download', fileName);
-        pp.style.display = "none";
-        document.body.appendChild(pp);
-        pp.click();
-        document.body.removeChild(pp);
-    }
-}
-*/
-
-/*
-//No funciono
-function downloadCSV(content, fileName) {
-    showMessage('entro a generar el CSV V8!');
-    // Detectar si estamos en iOS (Chrome o Firefox)
-    var isIOS = !!navigator.userAgent.match(/CriOS|FxiOS/i);
-
-    // Crear el blob con el contenido CSV
-    var blob = new Blob([content], { type: 'text/csv;charset=utf-8;' });
-
-    // Crear un link temporal para la descarga o para abrir en una nueva pestaña
-    var downloadLink = document.createElement("a");
-
-    if (isIOS) {
-        // Si estamos en iOS con Chrome o Firefox, mostramos el archivo en una nueva pestaña
-        var csvUrl = URL.createObjectURL(blob);
-        
-        // El evento debe estar directamente vinculado a una acción del usuario (como un clic)
-        downloadLink.href = csvUrl;
-        downloadLink.target = '_blank'; // Abrir en nueva pestaña
-        downloadLink.click();
-    } else {
-        // Para otros navegadores, proceder con la descarga automática
-        downloadLink.download = fileName;
-        downloadLink.href = URL.createObjectURL(blob);
-        downloadLink.style.display = "none";
-        document.body.appendChild(downloadLink);
-        
-        // Ejecutar la descarga
-        downloadLink.click();
-        
-        // Eliminar el enlace del DOM
-        document.body.removeChild(downloadLink);
-    }
-}
-*/
-
-/*
-//NO funciono
-function downloadCSV(content, fileName) {
-     showMessage('entro a generar el CSV V9');
-    // Crear el blob con el contenido CSV
-    var blob = new Blob([content], { type: 'text/csv;charset=utf-8;' });
-    
-    // Detectar si estamos en iOS (Chrome o Firefox)
-    var isIOS = !!navigator.userAgent.match(/CriOS|FxiOS/i);
-    
-    // Crear un enlace temporal para mostrar el archivo
-    var downloadLink = document.createElement("a");
-
-    if (isIOS) {
-        // En iOS (Chrome y Firefox), abrimos el archivo en una nueva pestaña
-        var csvUrl = URL.createObjectURL(blob);
-        window.open(csvUrl, '_blank'); // Abre el archivo en una nueva pestaña
-    } else {
-        // Para otros navegadores, proceder con la descarga automática
-        downloadLink.download = fileName;
-        downloadLink.href = URL.createObjectURL(blob);
-        downloadLink.style.display = "none";
-        document.body.appendChild(downloadLink);
-
-        // Ejecutar la descarga
-        downloadLink.click();
-
-        // Eliminar el enlace del DOM
-        document.body.removeChild(downloadLink);
-    }
-}
-*/
-
-/*
-No funciono
-function downloadCSV(content, fileName) {
-    showMessage('entro a generar el CSV 10');
-    var blob = new Blob([content], { type: 'text/csv;charset=utf-8;' });
-    var isIOS = !!navigator.userAgent.match(/CriOS|FxiOS/i); // Detectar Chrome y Firefox en iOS
-
-    if (isIOS) {
-        // Para Chrome o Firefox en iOS, abrir el archivo en una nueva pestaña
-        var csvUrl = window.URL.createObjectURL(blob);
-        window.open(csvUrl, '_blank'); // Abrir en nueva pestaña, desde donde el usuario puede guardar el archivo manualmente
-    } else {
-        // Para otros navegadores, descargar automáticamente el CSV
-        var link = document.createElement("a");
-        if (link.download !== undefined) { // Característica de descarga soportada
-            var url = window.URL.createObjectURL(blob);
-            link.setAttribute("href", url);
-            link.setAttribute("download", fileName); // Nombre del archivo CSV
-            link.style.visibility = 'hidden';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link); // Remover el enlace del DOM después de la descarga
-        }
-    }
-}
-*/
-
-/*
-//NO grabó, pero en firefox me solicita habilitar los pop-ups. NO logré habilitarlos!
-function downloadCSV(content, fileName) {
-    var blob = new Blob([content], { type: 'text/csv;charset=utf-8;' });
-    var isIOS = !!navigator.userAgent.match(/CriOS|FxiOS/i); // Detectar Chrome y Firefox en iOS
-
-    if (isIOS) {
-        // Para Chrome o Firefox en iOS, mostrar el CSV en una nueva pestaña
-        var csvUrl = window.URL.createObjectURL(blob);
-        var newWindow = window.open(csvUrl, '_blank'); // Abrir en una nueva pestaña
-
-        if (newWindow === null || typeof newWindow === 'undefined') {
-            alert('Por favor, habilite los pop-ups en este sitio para descargar el archivo.');
-        }
-    } else {
-        // Para otros navegadores, descargar el archivo CSV automáticamente
-        var link = document.createElement("a");
-        var url = window.URL.createObjectURL(blob);
-        link.setAttribute("href", url);
-        link.setAttribute("download", fileName); // Nombre del archivo CSV
-        link.style.visibility = 'hidden';
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link); // Remover el enlace después de la descarga
-    }
-}
-*/
-
-/*
-Abre un BLOB con los datos solo de los ejercicios
-function downloadCSV(content, fileName) {
-    showMessage('entro a generar el CSV 11');
-    var blob = new Blob([content], { type: 'text/csv;charset=utf-8;' });
-    
-            // Para otros navegadores, intenta descargar automáticamente el archivo CSV
-        var link = document.createElement("a");
-        var url = window.URL.createObjectURL(blob);
-        link.setAttribute("href", url);
-        link.setAttribute("download", fileName); // Nombre del archivo CSV
-        link.style.visibility = 'hidden';
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link); // Remover el enlace después de la descarga
-   
-}
-*/
-
-/*
-//No funciono pero abrió nuevas pestañas en Firefox solamente
-function downloadCSV(content, fileName) {
-   showMessage('entro a generar el CSV 13'); 
-   var csvData = 'data:text/csv;charset=utf-8,' + encodeURIComponent(content);
-    var link = document.createElement("a");
-
-    if (navigator.userAgent.match(/CriOS|FxiOS/i)) {
-        // Mostrar el CSV en una nueva pestaña en Chrome/Firefox en iOS
-        window.open(csvData);
-    } else {
-        // Para otros navegadores, intenta descargar automáticamente el archivo CSV
-        link.setAttribute("href", csvData);
-        link.setAttribute("download", fileName);
-        link.style.visibility = 'hidden';
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-    }
-}
-*/
-
 function downloadCSV(content, fileName) {
     var csvData = 'data:text/csv;charset=utf-8,' + encodeURIComponent(content);
 
@@ -2347,7 +2015,7 @@ function downloadCSV(content, fileName) {
         //newWindow.document.write('<pre>' + content + '</pre>');  // Mostrar el CSV como texto
         //newWindow.document.title = fileName;  // Asignar el nombre del archivo como título
         //alert('El archivo CSV está en la nueva pestaña. Puedes copiarlo manualmente.');
-	showMessage('via mail');
+	//showMessage('via mail');
     	var csvContent = encodeURIComponent(content);
     	var mailtoLink = "mailto:?subject=" + encodeURIComponent(fileName) + "&body=" + csvContent;
     	window.location.href = mailtoLink;	
@@ -2403,6 +2071,7 @@ function readAndImportFile(file) {
         },
         error: function(error) {
           console.error("Parsing error:", error); // Muestra errores de parseo si los hay
+	  showMessage("Parsing error!");
         }
       });
     } catch (error) {
@@ -2413,13 +2082,13 @@ function readAndImportFile(file) {
     console.error("File reading error:", event); // Muestra errores de lectura del archivo si los hay
   };
   reader.readAsText(file);
+  showMessage("Data Imported to DB");
 }
 
 
 function processParsedData(fileName, data) {
   //const output = document.getElementById("output");
   //output.innerHTML = ''; // Clear previous content
-
   
  if (!data || data.length === 0) {
     console.error("Parsed data is empty or invalid");
