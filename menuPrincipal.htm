@@ -361,7 +361,6 @@ textarea {
     background-color: #1c84ed; /* Color de fondo del botón */
     color: white;    /* Color del texto */
     border: none;    /* Elimina el borde predeterminado */
-    //cursor: pointer; /* Cambia el cursor a pointer */
 }
 
 .slidecontainer button:hover {
@@ -408,7 +407,7 @@ textarea {
     <a href="javascript:void(0)" class="dropbtn">DB</a>
     <div class="dropdown-content">
       <a href="#" onclick="exportData()">Export DB</a>
-      <a href="#" onclick="importData(); return false;">Import DB</a>
+      <a href="#" onclick="confirmDeleteAndImport()"; return false;">Import DB</a>
 	<input type="file" id="import-csv" style="display:none;" accept=".csv" multiple/>
       
     </div>
@@ -2697,6 +2696,106 @@ async function alertRestEnd() {
 }
 
 
+//Ask to User if import or not
+function confirmDeleteAndImport() {
+  
+  // Mostrar el cuadro de confirmación
+  let confirmation = confirm('All data will be deleted, before import. ¿Continue?');
+
+  // Si el usuario acepta, proceder con la eliminación
+  if (confirmation) {
+     	const importCsv = document.getElementById("import-csv");
+  	importCsv.click();
+  	importCsv.addEventListener("change", function(event) {
+    	  const files = event.target.files;
+    	    if (files.length > 0)
+            {
+      		deleteAllExercisesAndBalls(); //Delete exercises and balls
+                for (let file of files)
+                {
+        	     console.log("File selected:", file); // Verifica que el archivo se ha seleccionado
+        	     readAndImportFile(file);
+      		}
+    	    }
+         });
+     
+       
+      	
+  } else {
+    console.log('Importación cancelada. No se han eliminado los datos.');
+  }
+}
+
+
+//Delete all exercises, before import
+function deleteAllExercisesAndBalls() {
+  let transaction = db.transaction(['exercise'], 'readwrite');
+  let store = transaction.objectStore('exercise');
+
+  // Abrir un cursor para recorrer y eliminar todos los ejercicios
+  let request = store.openCursor();
+
+  request.onsuccess = function() {
+   let cursor = request.result; 
+
+    if (cursor) {
+      let exerciseId = cursor.primaryKey;
+      
+      // Eliminar el ejercicio actual
+      let deleteExerciseRequest = store.delete(exerciseId);
+      deleteExerciseRequest.onsuccess = () => {
+        console.log(`Exercise ${exerciseId} deleted.`);
+        // Eliminar las bolas relacionadas con el ejercicio
+        deleteAllBallsForExercise(exerciseId);
+      };
+      deleteExerciseRequest.onerror = () => {
+        console.error(`Error deleting exercise ${exerciseId}.`);
+      };
+
+      cursor.continue(); // Continuar con el siguiente ejercicio
+    } else {
+      console.log('Todos los ejercicios han sido eliminados.');
+    }
+  };
+
+  request.onerror = function(event) {
+    console.error('Error abriendo el cursor para ejercicios.');
+  };
+}
+
+
+// //Delete all balls from each exercises, before import
+function deleteAllBallsForExercise(exerciseId) {
+  let transaction = db.transaction(['exercise_ball'], 'readwrite');
+  let store = transaction.objectStore('exercise_ball');
+ 
+
+  let request = store.openCursor();
+
+  request.onsuccess = function() {
+    let cursor = request.result;
+
+    if (cursor) {
+      //let key = cursor.primaryKey;
+      let values = cursor.value;   // Valores del objeto
+      let keyid =  [values.idex, values.idball];
+      if (exerciseId == values.idex)
+      {		 
+      	// Eliminar la bola
+      	store.delete(keyid).onsuccess = () => {
+        console.log(`Ball ${values.idball} deleted for exercise ${exerciseId}.`);
+        };
+      }
+      cursor.continue(); // Continuar con la siguiente bola relacionada
+    } else {
+      console.log(`Todas las bolas relacionadas al ejercicio ${exerciseId} han sido eliminadas.`);
+    }
+  };
+
+  request.onerror = function(event) {
+    console.error(`Error abriendo el cursor para bolas relacionadas al ejercicio ${exerciseId}.`);
+  };
+}
 
 
 
