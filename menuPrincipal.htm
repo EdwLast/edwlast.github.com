@@ -1404,40 +1404,43 @@ function rndPlace() {
 
 
 async function addItem() {
-  const transaction = db.transaction(['exercise'], 'readwrite');
-  const store = transaction.objectStore('exercise');
-  var desc = getExerciseDesc();
-  var ball = getBallMin();
-  var trt = getTraining();
-  var rest = getRest();
-  var cyc = getCycle();
-  var rndD = rndDist();
-  var rndP = rndPlace();
-  
   let newExerciseId = await getLastIdExercise(); // Obtener el ID del nuevo ejercicio  
-  newExerciseId = newExerciseId + 1;   
+  newExerciseId = newExerciseId + 1;    
+  
+  if (newExerciseId > 0)
+  {
+    const transaction = db.transaction(['exercise'], 'readwrite');
+    const store = transaction.objectStore('exercise');
+    var desc = getExerciseDesc();
+    var ball = getBallMin();
+    var trt = getTraining();
+    var rest = getRest();
+    var cyc = getCycle();
+    var rndD = rndDist();
+    var rndP = rndPlace();
+  
+    const item = {
+      id: newExerciseId,
+      description: desc,
+      frequency: ball,
+      trainingtime: trt,
+      resttime: rest,
+      cycle: cyc,
+      drnd: rndD,
+      trnd: rndP,
+    };    
 
-  const item = {
-    id: newExerciseId,
-    description: desc,
-    frequency: ball,
-    trainingtime: trt,
-    resttime: rest,
-    cycle: cyc,
-    drnd: rndD,
-    trnd: rndP,
-  };    
+    const request = store.add(item);
 
-  const request = store.add(item);
+    request.onerror = function (e) {
+       console.log('Error', e.target.error.name);
+    };
+    request.onsuccess = function (e) {
+       console.log('Woot! Did it');
+    };
 
-  request.onerror = function (e) {
-    console.log('Error', e.target.error.name);
-  };
-  request.onsuccess = function (e) {
-    console.log('Woot! Did it');
-  };
-
-  getDisplayExercises(); // Refresca la lista de ejercicios
+    getDisplayExercises(); // Refresca la lista de ejercicios
+  }
 }
 
 
@@ -1513,7 +1516,6 @@ function updateItem() {
   
    getDisplayExercises(); //refresca la lista de ejercicios
 }
-
 
 
 function addUpdateItem() {
