@@ -1592,7 +1592,8 @@ function deleteExercise(){
      var result = confirm("Want to delete this Exercise?");
       	if (result) {
           deleteAllBallsForExercise(idex);
-  	  deleteItem(idex);  	
+  	  deleteItem(idex);
+          deleteItem(+idex);  	
 	}
   } 
 } 
