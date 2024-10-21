@@ -554,7 +554,6 @@ textarea {
  <br>
   <br>
  <button onClick="addUpdateItem()" class="button button3">Save</button>
- <!--  <button id="buttonDelete" onClick="deleteItem()" class="button button3">Delete</button> -->
  <button onClick="newExercise('Cancel')" class="button button3">Cancel</button>
    
 </div>
@@ -1592,19 +1591,21 @@ function deleteExercise(){
   if (idex > 0) {
      var result = confirm("Want to delete this Exercise?");
       	if (result) {
-  	  deleteItem();  	
+          deleteAllBallsForExercise(idex);
+  	  deleteItem(idex);  	
 	}
   } 
 } 
 
 
-function deleteItem() {
-  var idex = getSelectedExercise();
+function deleteItem(idex) {
+  //var idex = getSelectedExercise();
   
   let transaction = db.transaction(['exercise'], 'readwrite');
   let store = transaction.objectStore('exercise');
   
-  const request = store.delete(+idex); //el + delante de la clave convierte el string a un entero!
+  //const request = store.delete(+idex); //el + delante de la clave convierte el string a un entero!
+  const request = store.delete(idex); 
 
   request.onerror = function (e) {
     console.log('Error', e.target.error.name);
@@ -1613,6 +1614,7 @@ function deleteItem() {
   request.onsuccess = () => {
     console.log('deleted');
     //alert('Se borro el id ' + idex);
+    showMessage("Exercise Deleted!")
     getDisplayExercises(); //refresca la lista de ejercicios
   };
 }
@@ -2425,11 +2427,11 @@ function saveAsExercise(newExerciseId) {
     const transaction = db.transaction(['exercise'], 'readwrite');
     const store = transaction.objectStore('exercise');
 
-    
+    var newId = String(newExerciseId);
    
      // Crear un nuevo objeto para el nuevo ejercicio
     const item = {
-      id: newExerciseId,
+      id: newId,
       description: newDesc,
       frequency: ball,
       trainingtime: trt,
