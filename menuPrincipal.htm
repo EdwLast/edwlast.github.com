@@ -1405,6 +1405,7 @@ function rndPlace() {
 async function addItem() {
   let newExerciseId = await getLastIdExercise(); // Obtener el ID del nuevo ejercicio  
   newExerciseId = newExerciseId + 1;    
+  let strExerciseId = String(newExerciseId);
   
   if (newExerciseId > 0)
   {
@@ -1419,7 +1420,7 @@ async function addItem() {
     var rndP = rndPlace();
   
     const item = {
-      id: newExerciseId,
+      id: strExerciseId,
       description: desc,
       frequency: ball,
       trainingtime: trt,
@@ -1593,7 +1594,9 @@ function deleteExercise(){
       	if (result) {
           deleteAllBallsForExercise(idex);
   	  deleteItem(idex);
-          deleteItem(+idex);  	
+          deleteItem(+idex);  
+          showMessage("Exercise Deleted!")
+	  getDisplayExercises(); //refresca la lista de ejercicios	
 	}
   } 
 } 
@@ -1615,8 +1618,8 @@ function deleteItem(idex) {
   request.onsuccess = () => {
     console.log('deleted');
     //alert('Se borro el id ' + idex);
-    showMessage("Exercise Deleted!")
-    getDisplayExercises(); //refresca la lista de ejercicios
+    //showMessage("Exercise Deleted!")
+    //getDisplayExercises(); //refresca la lista de ejercicios
   };
 }
 
