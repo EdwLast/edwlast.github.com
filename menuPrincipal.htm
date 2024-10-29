@@ -574,11 +574,11 @@ textarea {
         	</div>
   		<div class="column" > 
        		       <i>Bola: </i><i id="ballSelected">0</i>  
-				<div><button onClick="ballSelected(1)" class="button button5">.1.</button><button onClick="ballSelected(6)" class="button button5">.6.</button></div>  
-    				<div><button onClick="ballSelected(2)" class="button button5">.2.</button><button onClick="ballSelected(7)"  class="button button5">.7.</button></div>
-    				<div><button onClick="ballSelected(3)"  class="button button5">.3.</button><button onClick="ballSelected(8)"  class="button button5">.8.</button></div>
-    				<div><button onClick="ballSelected(4)"  class="button button5">.4.</button><button onClick="ballSelected(9)"  class="button button5">.9.</button></div>
-    				<div><button onClick="ballSelected(5)"  class="button button5">.5.</button><button onClick="ballSelected(10)" class="button button5">.10</button></div>
+				<div><button onClick="ballSelected('1')" class="button button5">.1.</button><button onClick="ballSelected('6')" class="button button5">.6.</button></div>  
+    				<div><button onClick="ballSelected('2')" class="button button5">.2.</button><button onClick="ballSelected('7')"  class="button button5">.7.</button></div>
+    				<div><button onClick="ballSelected('3')"  class="button button5">.3.</button><button onClick="ballSelected('8')"  class="button button5">.8.</button></div>
+    				<div><button onClick="ballSelected('4')"  class="button button5">.4.</button><button onClick="ballSelected('9')"  class="button button5">.9.</button></div>
+    				<div><button onClick="ballSelected('5')"  class="button button5">.5.</button><button onClick="ballSelected('10')" class="button button5">.10</button></div>
   						
 		</div>
  			<div class="container">
@@ -1672,8 +1672,8 @@ function getBallRep(){
 function addBall() {
   const transaction = db.transaction(['exercise_ball'], 'readwrite');
   const store = transaction.objectStore('exercise_ball');
-  var idx = idExerciseSelected;
-  var number = getBallNumber();
+  var idx = idExerciseSelected.toString();
+  var number = getBallNumber().toString();
   var traj = getTrajectory();
   var spd = getSpeed();
   var pos = getPosition();
@@ -1861,7 +1861,7 @@ function deleteBall(idex,number) {
 function existBall(idBall){
   
   var idexercise = idExerciseSelected;
-  var number = idBall;  
+  var number = idBall.toString();  
 
         	
   let txn = db.transaction(['exercise_ball'], "readonly");
@@ -2498,7 +2498,7 @@ function getLastIdExercise() {
 // Define la función para copiar bolas a un nuevo ejercicio
 function copyBallsToNewExercise(currentExerciseId, newExerciseId) {
   
-  //alert ('Clave nuevo ejercicio: ' + newExerciseId);  
+  //alert ('Clave nuevo ejercicio: ' + newExerciseId + ' clave del viejo ejercicio ' + currentExerciseId );  
  
   let txn = db.transaction(['exercise_ball'], "readonly");
   let store = txn.objectStore('exercise_ball');
@@ -2598,18 +2598,21 @@ function getNextIdExercise() {
 async function saveAsExerciseBalls() {
   
   let newExerciseId = await getLastIdExercise();
-  newExerciseId = newExerciseId + 1;
-  // Esperar a que saveAsExercise termine y devuelva el resultado
-  const saveAsFlag = await saveAsExercise(newExerciseId); 
+  newExerciseId = newExerciseId + 1; //Obtiene el siguiente Id libre para insertar
+  let strExerciseId = newExerciseId.toString();
+  
+// Esperar a que saveAsExercise termine y devuelva el resultado
+  //const saveAsFlag = await saveAsExercise(newExerciseId); 
+  const saveAsFlag = await saveAsExercise(strExerciseId); 
 
   // Verificar si el ejercicio fue guardado correctamente
   if (saveAsFlag === 1) {
      let currentExerciseId = getSelectedExercise(); // Obtener el ID del ejercicio actual
-     //let lastExerciseId = await getLastIdExercise(); // Obtener el ID del ultimo ejercicio  
-     
-    
+       
+         
      // Llamar a la función para copiar las bolas
-     copyBallsToNewExercise(currentExerciseId, newExerciseId); 
+     //copyBallsToNewExercise(currentExerciseId, newExerciseId); 
+     copyBallsToNewExercise(currentExerciseId, strExerciseId); 
     
      // Refrescar la lista de ejercicios
      getDisplayExercises(); 
