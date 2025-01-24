@@ -2649,7 +2649,7 @@ async function saveAsExerciseBalls() {
 
  var contextAudio = new (window.AudioContext || window.webkitAudioContext)();      
       function makeBeep(dur,freq) {
-            
+        /*    
         //var contextAudio = new (window.AudioContext || window.webkitAudioContext)();
         var osc = contextAudio.createOscillator(); // instantiate an oscillator
         osc.type = 'sine'; // this is the default - also square, sawtooth, triangle
@@ -2658,8 +2658,20 @@ async function saveAsExerciseBalls() {
         //osc.start(); // start the oscillator
         osc.start(contextAudio.currentTime);
         osc.stop(contextAudio.currentTime + dur); // stop 1 seconds after the current time
+      */  
+        try {
+        const osc = contextAudio.createOscillator();
+        osc.type = "sine";
+        osc.frequency.value = freq;
+        osc.connect(contextAudio.destination);
+        osc.start(contextAudio.currentTime);
+        osc.stop(contextAudio.currentTime + dur);
+    	}
+		 catch (error) {
+        		console.error("Error al reproducir sonido:", error);
+    		}
         
-     }  
+   }  
 
 
 
