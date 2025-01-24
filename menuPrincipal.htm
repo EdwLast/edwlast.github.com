@@ -2658,7 +2658,7 @@ function makeBeep(dur, freq) {
         osc.type = 'sine'; // Tipo de onda
         osc.frequency.value = freq; // Frecuencia del beep
         const gainNode = contextAudio.createGain(); // Nodo de ganancia para ajustar el volumen
-        gainNode.gain.value = 0.1; // Volumen bajo para evitar bloqueos
+        gainNode.gain.value = 0.5; // Volumen bajo para evitar bloqueos
         osc.connect(gainNode);
         gainNode.connect(contextAudio.destination);
         osc.start(contextAudio.currentTime); // Iniciar beep
@@ -2756,7 +2756,6 @@ async function alertRestEnd() {
 
 
 async function alertRestEnd() {
-    alert('entre al rest');  
     // Cuenta regresiva de 5 a 0
     for (let i = 5; i >= 0; i--) {
         if (i > 0) {
