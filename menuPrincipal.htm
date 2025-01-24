@@ -2647,7 +2647,7 @@ async function saveAsExerciseBalls() {
 }
 
 
- var contextAudio = new (window.AudioContext || window.webkitAudioContext)();      
+ const contextAudio = new (window.AudioContext || window.webkitAudioContext)();      
       
     // Función para reproducir un beep
 function makeBeep(dur, freq) {
@@ -2766,9 +2766,10 @@ async function alertRestEnd() {
 	    showTimeout(i); // Mostrar el número en pantalla
         } else {
             	 //Al finalizar la cuenta regresiva, ocultar el contenedor
-           	 document.getElementById("ventCont").style.display="none";
-     	   	document.getElementById("ventCont").innerHTML="";
-		makeBeep(0.8, 1000);
+           	const ventCont = document.getElementById("ventCont");
+            	ventCont.style.display = "none";
+            	ventCont.textContent = "";
+		//makeBeep(0.8, 1000);
         	}
         await sleepNow(800); // Esperar 800ms antes de continuar
     }
