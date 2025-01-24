@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio y Cuenta Regresiva</title>
+    <style>
+        #ventCont {
+            display: none;
+            font-size: 2rem;
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <button id="startButton">Iniciar</button>
+    <div id="ventCont"></div>
+
+    <script>
+        const contextAudio = new (window.AudioContext || window.webkitAudioContext)();
+
+        // Función para pausar el código (simula sleep)
+        function sleepNow(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+
+        // Función para generar un beep
+        function makeBeep(dur, freq) {
+            try {
+                const osc = contextAudio.createOscillator(); // Oscilador
+                osc.type = 'sine'; // Tipo de onda
+                osc.frequency.value = freq; // Frecuencia
+                const gainNode = contextAudio.createGain(); // Nodo de ganancia
+                gainNode.gain.value = 0.1; // Reducir volumen
+                osc.connect(gainNode);
+                gainNode.connect(contextAudio.destination);
+                osc.start(contextAudio.currentTime);
+                osc.stop(contextAudio.currentTime + dur);
+            } catch (error) {
+                console.error("Error al reproducir sonido:", error);
+            }
+        }
+
+        // Mostrar el número en el contenedor
+        function showTimeout(number) {
+            const ventCont = document.getElementById("ventCont");
+            ventCont.style.display = "block";
+            ventCont.textContent = number;
+        }
+
+        // Función principal de cuenta regresiva
+        async function alertRestEnd() {
+            if (contextAudio.state === "suspended") {
+                await contextAudio.resume(); // Reanudar contexto si está suspendido
+            }
+
+            for (let i = 5; i >= 0; i--) {
+                if (i > 0) {
+                    makeBeep(0.5, 1000); // Reproducir beep
+                    showTimeout(i); // Mostrar número
+                } else {
+                    document.getElementById("ventCont").style.display = "none"; // Ocultar contenedor
+                }
+                await sleepNow(800); // Pausa entre cada iteración
+            }
+        }
+
+        // Asignar evento al botón de inicio
+        document.getElementById("startButton").addEventListener("click", () => {
+            alertRestEnd();
+        });
+    </script>
+</body>
+</html>
