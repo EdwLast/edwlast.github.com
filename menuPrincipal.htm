@@ -2675,6 +2675,10 @@ async function saveAsExerciseBalls() {
 
 
 async function alertRestEnd() {
+    
+    if (contextAudio.state === "suspended") {
+        await contextAudio.resume();
+    }
           
       var i = 1;  
       document.getElementById("ventCont").style.display="block";
