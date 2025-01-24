@@ -2647,8 +2647,20 @@ async function saveAsExerciseBalls() {
 }
 
 
- const contextAudio = new (window.AudioContext || window.webkitAudioContext)();      
-      
+ //const contextAudio = new (window.AudioContext || window.webkitAudioContext)();      
+ let contextAudio; 
+
+ function initializeAudioContext() {
+    // Inicializar el contexto de audio solo si no existe
+    if (!contextAudio) {
+        contextAudio = new (window.AudioContext || window.webkitAudioContext)();
+    }
+    // Reanudar el contexto de audio si está suspendido
+    if (contextAudio.state === "suspended") {
+        contextAudio.resume();
+    }
+}
+     
     // Función para reproducir un beep
 function makeBeep(dur, freq) {
     try {
@@ -2754,10 +2766,7 @@ async function alertRestEnd() {
 
 
 async function alertRestEnd() {
-    // Reanudar el contexto de audio si está suspendido
-    if (contextAudio.state === "suspended") {
-        await contextAudio.resume();
-    }
+    initializeAudioContext();
 
     // Cuenta regresiva de 5 a 0
     for (let i = 5; i >= 0; i--) {
