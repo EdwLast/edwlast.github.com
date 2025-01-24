@@ -402,7 +402,7 @@ textarea {
   <li><a href="#" onclick="saveAsExerciseBalls()">Save As</a></li>
   <li><a href="#" onclick="deleteExercise()">Delete</a></li>
   <li><a href="#" onclick="alertRestEnd()">prueba</a></li>
-
+  
   <li class="dropdown">
     <a href="javascript:void(0)" class="dropbtn">DB</a>
     <div class="dropdown-content">
@@ -412,6 +412,7 @@ textarea {
       
     </div>
   </li>
+  <li><a href="#" onclick="showCalibration()">Calibrate</a></li>
 </ul> 
 
 
@@ -557,6 +558,26 @@ textarea {
  <button onClick="newExercise('Cancel')" class="button button3">Cancel</button>
    
 </div>
+
+<div id="calibrationDiv" style="display: none; margin-top: 20px;">
+    <h2>Ball Calibration</h2>
+        
+	<div class="column">
+     		<canvas id="calibrationCanvas" width="200" height="300"></canvas> 
+        </div>
+   
+         
+    <label for="calibSpeed">Velocidad:</label>
+    <input type="range" id="calibSpeed" min="0" max="20" value="10" oninput="updateCalibrationParams('speed', this.value)"><br>
+
+    <label for="calibSpin">Efecto:</label>
+    <input type="range" id="calibSpin" min="0" max="20" value="5" oninput="updateCalibrationParams('spin', this.value)"><br>
+
+    <button onclick="sendCalibration()">Enviar Calibración</button>
+</div>
+
+
+
 
 
 <!-- //-------------------------Ball Adjust------------------------------------------------------- -->
@@ -777,6 +798,7 @@ let ballPrimaryKey = 0;
 
 let saveAsFlag = 0;
 
+const ballAdjustButtons = document.querySelectorAll('.buttonBallValues'); //Para que no se vea el botón Ball Adjust
 
 //****Disable ZOOM***********//
 document.addEventListener('touchstart', function(event) {
@@ -1200,7 +1222,7 @@ function getDisplayExercises() {
 
 
 document.getElementById('listExercises').onclick = function() {
-  
+  
    idExerciseSelected = document.getElementById('listExercises').value;
    descExerciseSelected = getDescriptionExercise(idExerciseSelected);
    
@@ -1213,10 +1235,10 @@ document.getElementById('listExercises').onclick = function() {
     
    //descExerciseSelected = document.querySelector('option[value="' + idExerciseSelected + '"]').label; 
    //alert('id: ' + idExerciseSelected + ' Descripcion: ' + descExerciseSelected);
-} 
+} 
 
 document.getElementById('listExercises').onchange = function() {
-  
+  
    idExerciseSelected = document.getElementById('listExercises').value;
    descExerciseSelected = getDescriptionExercise(idExerciseSelected);
    
@@ -2656,7 +2678,7 @@ async function alertRestEnd() {
           
       var i = 1;  
       document.getElementById("ventCont").style.display="block";
-      document.getElementById("ventCont").innerHTML="3"; 
+      document.getElementById("ventCont").innerHTML="5"; 
       
       for (let i = 1; i <= 6; i++) {
 	if (i == 1)
@@ -2808,10 +2830,30 @@ function deleteAllBallsForExercise(exerciseId) {
   };
 }
 
+/*
+function showCalibration() {
+    //window.alert('calibrar');	
+    const calibrationDiv = document.getElementById('calibrationDiv');
+    calibrationDiv.style.display = calibrationDiv.style.display === 'none' ? 'block' : 'none';
+}
+*/
 
+function showCalibration() {
+    const calibrationDiv = document.getElementById('calibrationDiv');
+    const answerDiv = document.getElementById('answer'); // Div de Ball Adjust
+    const ballAdjustButtons = document.querySelectorAll('.buttonBallValues'); // Selecciona los botones de Ball Adjust
+
+    if (calibrationDiv.style.display === 'none') {
+        calibrationDiv.style.display = 'block'; // Muestra la calibración
+        answerDiv.style.display = 'none'; // Oculta Ball Adjust
+        ballAdjustButtons.forEach(button => button.style.display = 'none'); // Oculta los botones de Ball Adjust
+    } else {
+        calibrationDiv.style.display = 'none'; // Oculta la calibración
+        answerDiv.style.display = 'block'; // Muestra Ball Adjust
+        ballAdjustButtons.forEach(button => button.style.display = 'inline-block'); // Muestra los botones de Ball Adjust
+    }
+}
 
 </script>
 </body> 
 </html>
-
-
