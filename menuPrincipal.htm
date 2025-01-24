@@ -2648,17 +2648,16 @@ async function saveAsExerciseBalls() {
 
 
  //const contextAudio = new (window.AudioContext || window.webkitAudioContext)();      
- let contextAudio; 
+ let contextAudio = new (window.AudioContext || window.webkitAudioContext)();    
+
 
  function initializeAudioContext() {
-    // Inicializar el contexto de audio solo si no existe
-    if (!contextAudio) {
-        contextAudio = new (window.AudioContext || window.webkitAudioContext)();
-    }
+   
     // Reanudar el contexto de audio si está suspendido
     if (contextAudio.state === "suspended") {
         contextAudio.resume();
     }
+    alert('Sali del audioContext'); 
 }
      
     // Función para reproducir un beep
@@ -2766,7 +2765,6 @@ async function alertRestEnd() {
 
 
 async function alertRestEnd() {
-    alert('ENTRE al REST'); 
     initializeAudioContext();
     // Cuenta regresiva de 5 a 0
     for (let i = 5; i >= 0; i--) {
