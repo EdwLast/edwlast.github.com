@@ -2648,12 +2648,13 @@ async function saveAsExerciseBalls() {
 
 
  //const contextAudio = new (window.AudioContext || window.webkitAudioContext)();      
- let contextAudio = new (window.AudioContext || window.webkitAudioContext)();    
+ //let contextAudio = new (window.AudioContext || window.webkitAudioContext)();    
 
      
     // Función para reproducir un beep
 function makeBeep(dur, freq) {
     try {
+        let contextAudio = new (window.AudioContext || window.webkitAudioContext)(); 
         const osc = contextAudio.createOscillator(); // Oscilador
         osc.type = 'sine'; // Tipo de onda
         osc.frequency.value = freq; // Frecuencia del beep
