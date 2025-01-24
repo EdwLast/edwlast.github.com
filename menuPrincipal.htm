@@ -2650,15 +2650,6 @@ async function saveAsExerciseBalls() {
  //const contextAudio = new (window.AudioContext || window.webkitAudioContext)();      
  let contextAudio = new (window.AudioContext || window.webkitAudioContext)();    
 
-
- function initializeAudioContext() {
-   
-    // Reanudar el contexto de audio si está suspendido
-    if (contextAudio.state === "suspended") {
-        contextAudio.resume();
-    }
-    alert('Sali del audioContext'); 
-}
      
     // Función para reproducir un beep
 function makeBeep(dur, freq) {
@@ -2765,7 +2756,7 @@ async function alertRestEnd() {
 
 
 async function alertRestEnd() {
-    initializeAudioContext();
+    alert('entre al rest');  
     // Cuenta regresiva de 5 a 0
     for (let i = 5; i >= 0; i--) {
         if (i > 0) {
