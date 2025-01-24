@@ -2648,44 +2648,51 @@ async function saveAsExerciseBalls() {
 
 
  var contextAudio = new (window.AudioContext || window.webkitAudioContext)();      
-      function makeBeep(dur,freq) {
-        /*    
-        //var contextAudio = new (window.AudioContext || window.webkitAudioContext)();
-        var osc = contextAudio.createOscillator(); // instantiate an oscillator
-        osc.type = 'sine'; // this is the default - also square, sawtooth, triangle
-        osc.frequency.value = freq; // Hz
-        osc.connect(contextAudio.destination); // connect it to the destination
-        //osc.start(); // start the oscillator
-        osc.start(contextAudio.currentTime);
-        osc.stop(contextAudio.currentTime + dur); // stop 1 seconds after the current time
-      */  
-        try {
-        const osc = contextAudio.createOscillator();
-        osc.type = "sine";
-        osc.frequency.value = freq;
-        osc.connect(contextAudio.destination);
-        osc.start(contextAudio.currentTime);
-        osc.stop(contextAudio.currentTime + dur);
-    	}
-		 catch (error) {
-        		console.error("Error al reproducir sonido:", error);
-    		}
-        
-   }  
+      
+    // Función para reproducir un beep
+function makeBeep(dur, freq) {
+    try {
+        const osc = contextAudio.createOscillator(); // Oscilador
+        osc.type = 'sine'; // Tipo de onda
+        osc.frequency.value = freq; // Frecuencia del beep
+        const gainNode = contextAudio.createGain(); // Nodo de ganancia para ajustar el volumen
+        gainNode.gain.value = 0.5; // Volumen bajo para evitar bloqueos
+        osc.connect(gainNode);
+        gainNode.connect(contextAudio.destination);
+        osc.start(contextAudio.currentTime); // Iniciar beep
+        osc.stop(contextAudio.currentTime + dur); // Detener beep después de la duración
+    } catch (error) {
+        console.error("Error al reproducir sonido:", error);
+    }
+}
 
 
 
 
 
- 
+ /*
  function showTimeout(to)
  {
  	document.getElementById("ventCont").innerHTML=to;
  }
-            
- const sleepNow = (delay) => new Promise((resolve) => setTimeout(resolve, delay))
+ */
+
+function showTimeout(number) {
+    const ventCont = document.getElementById("ventCont");
+    ventCont.style.display = "block";
+    ventCont.textContent = number; // Mostrar el número actual
+}
+
+           
+ //const sleepNow = (delay) => new Promise((resolve) => setTimeout(resolve, delay))
+ 
+// Función para hacer una pausa (simula sleep)
+function sleepNow(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
 
 
+/*
 async function alertRestEnd() {
     
     if (contextAudio.state === "suspended") {
@@ -2740,8 +2747,31 @@ async function alertRestEnd() {
              		     }
 			}
 		}
-             	//await sleepNow(800)
+             	await sleepNow(800)
        }//for
+}
+*/
+
+
+async function alertRestEnd() {
+    // Reanudar el contexto de audio si está suspendido
+    if (contextAudio.state === "suspended") {
+        await contextAudio.resume();
+    }
+
+    // Cuenta regresiva de 5 a 0
+    for (let i = 5; i >= 0; i--) {
+        if (i > 0) {
+            makeBeep(0.5, 1000); // Reproducir un beep con frecuencia 1000 Hz y duración 0.5s
+	    showTimeout(i); // Mostrar el número en pantalla
+        } else {
+            	 //Al finalizar la cuenta regresiva, ocultar el contenedor
+           	 document.getElementById("ventCont").style.display="none";
+     	   	document.getElementById("ventCont").innerHTML="";
+		makeBeep(0.8, 1000);
+        	}
+        await sleepNow(800); // Esperar 800ms antes de continuar
+    }
 }
 
 
