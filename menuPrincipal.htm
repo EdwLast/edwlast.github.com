@@ -340,6 +340,22 @@ input[type="range"] {
 input[type="range"]::-webkit-slider-runnable-track {
   height: 10px;
 }
+
+* { 
+  touch-action: manipulation;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+input, textarea {
+  touch-action: manipulation;
+  font-size: 16px;
+}
+
 </style>
 
  <title>Table Tennis Robot Controller</title>
