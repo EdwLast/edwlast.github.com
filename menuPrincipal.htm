@@ -383,8 +383,20 @@ textarea {
 	//border-radius: 50%;
         }
 
+* { 
+  touch-action: manipulation;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+
 
 </style>
+
  <title>Table Tennis Robot Controller</title>
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
@@ -412,7 +424,7 @@ textarea {
       
     </div>
   </li>
-  <li><a href="#" onclick="showCalibration()">Calibrar</a></li>
+  <li><a href="#" onclick="showCalibration()">Calibrte</a></li>
 </ul> 
 
 
@@ -559,6 +571,22 @@ textarea {
    
 </div>
 
+<div id="calibrationDiv" style="display: none; margin-top: 20px;">
+    <h2>Ball Calibration</h2>
+        
+	<div class="column">
+     		<canvas id="calibrationCanvas" width="200" height="300"></canvas> 
+        </div>
+   
+         
+    <label for="calibSpeed">Velocidad:</label>
+    <input type="range" id="calibSpeed" min="0" max="20" value="10" oninput="updateCalibrationParams('speed', this.value)"><br>
+
+    <label for="calibSpin">Efecto:</label>
+    <input type="range" id="calibSpin" min="0" max="20" value="5" oninput="updateCalibrationParams('spin', this.value)"><br>
+
+    <button onclick="sendCalibration()">Enviar Calibración</button>
+</div>
 
 <!-- //-------------------------Ball Adjust------------------------------------------------------- -->
 
@@ -581,7 +609,7 @@ textarea {
     				<div><button onClick="ballSelected('4')"  class="button button5">.4.</button><button onClick="ballSelected('9')"  class="button button5">.9.</button></div>
     				<div><button onClick="ballSelected('5')"  class="button button5">.5.</button><button onClick="ballSelected('10')" class="button button5">.10</button></div>
   		</div>
- 			<div class="container">
+			<div class="container">
        			 	<div class="circle" id="circle">
             				<div class="dot" id="dot"></div>
         			</div>
@@ -777,8 +805,9 @@ let ballPrimaryKey = 0;
 
 let saveAsFlag = 0;
 
+const ballAdjustButtons = document.querySelectorAll('.buttonBallValues'); //Para que no se vea el botón Ball Adjust
 
-//****Disable ZOOM***********//
+//*******************************************************Disable ZOOM*************************************//
 document.addEventListener('touchstart', function(event) {
     if (event.touches.length > 1) {
         event.preventDefault(); // Evitar el zoom de pellizco
@@ -789,7 +818,11 @@ document.addEventListener('gesturestart', function(event) {
     event.preventDefault(); // Evitar el zoom de gesto
 });
 
-
+document.addEventListener('touchmove', function(event) {
+    if (event.scale !== 1) {
+        event.preventDefault(); // Evitar el zoom de pellizco
+    }
+}, { passive: false });
 
 //----variables para el dibujo de los efectos en la bola
 
@@ -2626,33 +2659,56 @@ async function saveAsExerciseBalls() {
 }
 
 
- var contextAudio = new (window.AudioContext || window.webkitAudioContext)();      
-      function makeBeep(dur,freq) {
-            
-        //var contextAudio = new (window.AudioContext || window.webkitAudioContext)();
-        var osc = contextAudio.createOscillator(); // instantiate an oscillator
-        osc.type = 'sine'; // this is the default - also square, sawtooth, triangle
-        osc.frequency.value = freq; // Hz
-        osc.connect(contextAudio.destination); // connect it to the destination
-        //osc.start(); // start the oscillator
-        osc.start(contextAudio.currentTime);
-        osc.stop(contextAudio.currentTime + dur); // stop 1 seconds after the current time
-        
-     }  
+//const contextAudio = new (window.AudioContext || window.webkitAudioContext)();      
+ //let contextAudio = new (window.AudioContext || window.webkitAudioContext)();    
+
+     
+    // Función para reproducir un beep
+function makeBeep(dur, freq) {
+    try {
+        let contextAudio = new (window.AudioContext || window.webkitAudioContext)(); 
+        const osc = contextAudio.createOscillator(); // Oscilador
+        osc.type = 'sine'; // Tipo de onda
+        osc.frequency.value = freq; // Frecuencia del beep
+        const gainNode = contextAudio.createGain(); // Nodo de ganancia para ajustar el volumen
+        gainNode.gain.value = 0.7; // Volumen bajo para evitar bloqueos
+        osc.connect(gainNode);
+        gainNode.connect(contextAudio.destination);
+        osc.start(contextAudio.currentTime); // Iniciar beep
+        osc.stop(contextAudio.currentTime + dur); // Detener beep después de la duración
+    } catch (error) {
+        console.error("Error al reproducir sonido:", error);
+    }
+}
 
 
 
 
-
- 
+ /*
  function showTimeout(to)
  {
  	document.getElementById("ventCont").innerHTML=to;
  }
-            
- const sleepNow = (delay) => new Promise((resolve) => setTimeout(resolve, delay))
+ */
+
+function showTimeout(number) {
+    const ventCont = document.getElementById("ventCont");
+    ventCont.style.display = "block";
+    ventCont.textContent = number; // Mostrar el número actual
+}
+
+           
+ //const sleepNow = (delay) => new Promise((resolve) => setTimeout(resolve, delay))
+ 
+// Función para hacer una pausa (simula sleep)
+function sleepNow(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
 
 
+
+
+/*
 async function alertRestEnd() {
           
       var i = 1;  
@@ -2705,6 +2761,23 @@ async function alertRestEnd() {
 		}
              	await sleepNow(800)
        }//for
+}
+*/
+async function alertRestEnd() {
+    // Cuenta regresiva de 5 a 0
+    for (let i = 5; i >= 0; i--) {
+        if (i > 0) {
+            showTimeout(i); // Mostrar el número en pantalla
+ 	    makeBeep(0.5, 1000); // Reproducir un beep con frecuencia 1000 Hz y duración 0.5s	
+        } else {
+            	 //Al finalizar la cuenta regresiva, ocultar el contenedor
+           	const ventCont = document.getElementById("ventCont");
+            	ventCont.style.display = "none";
+            	ventCont.textContent = "";
+		makeBeep(0.8, 1000);
+        	}
+        await sleepNow(800); // Esperar 800ms antes de continuar
+    }
 }
 
 
@@ -2809,6 +2882,29 @@ function deleteAllBallsForExercise(exerciseId) {
   };
 }
 
+/*
+function showCalibration() {
+    //window.alert('calibrar');	
+    const calibrationDiv = document.getElementById('calibrationDiv');
+    calibrationDiv.style.display = calibrationDiv.style.display === 'none' ? 'block' : 'none';
+}
+*/
+
+function showCalibration() {
+    const calibrationDiv = document.getElementById('calibrationDiv');
+    const answerDiv = document.getElementById('answer'); // Div de Ball Adjust
+    const ballAdjustButtons = document.querySelectorAll('.buttonBallValues'); // Selecciona los botones de Ball Adjust
+
+    if (calibrationDiv.style.display === 'none') {
+        calibrationDiv.style.display = 'block'; // Muestra la calibración
+        answerDiv.style.display = 'none'; // Oculta Ball Adjust
+        ballAdjustButtons.forEach(button => button.style.display = 'none'); // Oculta los botones de Ball Adjust
+    } else {
+        calibrationDiv.style.display = 'none'; // Oculta la calibración
+        answerDiv.style.display = 'block'; // Muestra Ball Adjust
+        ballAdjustButtons.forEach(button => button.style.display = 'inline-block'); // Muestra los botones de Ball Adjust
+    }
+}
 
 
 </script>
