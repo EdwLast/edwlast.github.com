@@ -74,21 +74,38 @@ body {
 .button3:hover {background-color: #1361b0}
 
 
+canvas-button-wrapper {
+  display: flex;
+  align-items: center; /* Centra verticalmente */
+}
+
 .button-container {
-  float: left;
-  margin-left: 10px; /* Espacio entre el canvas y los botones */
+  margin-left: 10px;
   display: flex;
   flex-direction: column;
-  justify-content: center; /* Centra los botones verticalmente */
-  height: 340px; /* Alinea con la altura del canvas */
+  justify-content: center;
+  height: 300px; /* Asegura que sea igual a la altura del canvas */
 }
 
 
+/* Transición para los botones Play y Stop */
+#playStopContainer {
+    transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Cuando los botones Play y Stop están ocultos */
+#playStopContainer.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
 .buttonPlayStop {
-            padding: 15px 30px; /* Aumenta el tamaño del botón */
-            font-size: 18px; /* Aumenta el tamaño del texto */
-            margin-bottom: 15px; /* Espacio entre los botones */
-        }
+  padding: 15px 30px;
+  font-size: 18px;
+  margin-bottom: 15px;
+}
  
  body {
   margin: 20;
@@ -210,19 +227,19 @@ vertical {
               
           }
 
-   #answer,
-    #show,
-    #hide:target {
-          display: none; 
-    } 
+   #answer {
+    transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
+    opacity: 0;
+    visibility: hidden;
+    display: block; /* Asegúrate de que esté en bloque */
+}
 
-    #hide:target + #show,
-        #hide:target ~ #answer {
-          display: inherit;
-          width: auto;
-          height: auto;
-        }
-
+#answer.visible {
+    opacity: 1;
+    visibility: visible;
+    width: auto;
+    height: auto;
+}
 
 
 *,
@@ -393,7 +410,49 @@ textarea {
   user-select: none;
 }
 
+.menu-icon {
+  display: inline-block;
+  cursor: pointer;
+}
 
+.menu-icon span {
+  display: block;
+  width: 25px;
+  height: 3px;
+  background-color: #333;
+  margin: 4px 0;
+  transition: 0.3s;
+}
+
+
+
+#ballAdjustContainer, #answer {
+    transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
+    opacity: 0;
+    visibility: hidden;
+    align-items: center;
+    margin-top: 30px; 
+}
+
+/* Cuando los elementos están visibles */
+#ballAdjustContainer.visible, #answer.visible {
+    opacity: 1;
+    visibility: visible;
+    align-items: center;
+    margin-top: 30px; 	
+}
+
+#ballAdjustBtn {
+  /*
+  position: fixed;
+  top: 410px;  /* Ajusta según la posición deseada */
+  left: 28px;
+  z-index: 10;  /* Asegura que el botón quede encima del contenido */
+  */
+  position: absolute;
+  top: 40%;
+  left: 2%;
+}
 
 </style>
 
@@ -407,13 +466,31 @@ textarea {
 
 
 <ul>
-  <li><a href="#" onclick="drawBallsExercise()">Select</a></li>
-  <li><a href="#" onclick="loadExercise()">Load Exercise</a></li>
-  <li><a href="#" onclick="modifyExercise()">Modify</a></li>
-  <li><a href="#" onclick="newExercise('New')">New</a></li>
-  <li><a href="#" onclick="saveAsExerciseBalls()">Save As</a></li>
-  <li><a href="#" onclick="deleteExercise()">Delete</a></li>
-  <li><a href="#" onclick="alertRestEnd()">prueba</a></li>
+  <!-- <li><a href="#" onclick="drawBallsExercise()">Select</a></li> -->
+  <!-- <li><a href="#" onclick="loadExercise()">Load Exercise</a></li> -->
+  <!-- <li><a href="#" onclick="modifyExercise()">Modify</a></li> -->
+  <!-- <li><a href="#" onclick="newExercise('New')">New</a></li> -->
+  <!-- <li><a href="#" onclick="saveAsExerciseBalls()">Save As</a></li> -->
+  <!-- <li><a href="#" onclick="deleteExercise()">Delete</a></li> -->
+ <!-- <li><a href="#" onclick="alertRestEnd()">prueba</a></li> -->
+  
+  <li class="dropdown">
+  <a href="javascript:void(0)" class="dropbtn">
+    <div class="menu-icon">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </a>
+  <div class="dropdown-content">  
+    <a href="#" onclick="drawBallsExercise()">Select</a>
+    <a href="#" onclick="loadExercise()">Load Exercise</a>		
+    <a href="#" onclick="newExercise('New')">New</a>
+    <a href="#" onclick="modifyExercise()">Modify</a>
+    <a href="#" onclick="saveAsExerciseBalls()">Save As</a>
+    <a href="#" onclick="deleteExercise()">Delete</a>
+  </div>
+</li>
 
   <li class="dropdown">
     <a href="javascript:void(0)" class="dropbtn">DB</a>
@@ -424,42 +501,73 @@ textarea {
       
     </div>
   </li>
-  <li><a href="#" onclick="showCalibration()">Calibrte</a></li>
+<!-- <li><a href="#" onclick="showCalibration()">Calibrte</a></li> -->
 </ul> 
 
 
-<!-- <canvas id="DemoCanvas" width="200" height="300"></canvas> -->
-  <div class="column">
-     <canvas width="200" height="300"></canvas> 
+<!--
+<div class="column">
+     <canvas width="200" height="300"></canvas>
      <div class="column">
     	<label>Select exercise:</label>
   		<select id="listExercises" name="exercises" size="1" >
-    	 
-  		</select>
+    	        </select>
     
     </div>
   </div>
-  <div class="button-container">
+ <div id="playStopContainer">
         <button onClick="play()" class="button button3 buttonPlayStop">Play</button>
         <button onClick="stop()" class="button button3 buttonPlayStop">Stop</button>
-    </div>  
+  </div>  
+-->
 
-<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<div class="column">
+<label>Select exercise:</label>
+	<select id="listExercises" name="exercises" size="1" ></select> 
+        
 
-<!-- <br><br><br><br><br><br><br><br><br><br><br><br> -->
+  <div class="column" style="display: flex; align-items: center; height: 300px;">
+   <canvas width="200" height="300"></canvas>
+   
+
+  <div id="playStopContainer" class="visible">
+    <button onClick="play()" class="button button3 buttonPlayStop">Play</button>
+    <button onClick="stop()" class="button button3 buttonPlayStop">Stop</button>
+  </div>
+</div>
+   
+ </div> 
+  
+  <div id="ballAdjustContainer" class="hidden">
+    <div class="column">
+     <i>Ball: </i><i id="ballSelected">0</i>  
+        <div><button onClick="ballSelected('1')" class="button button5">.1.</button><button onClick="ballSelected('6')" class="button button5">.6.</button></div>
+        <div><button onClick="ballSelected('2')" class="button button5">.2.</button><button onClick="ballSelected('7')" class="button button5">.7.</button></div>
+        <div><button onClick="ballSelected('3')" class="button button5">.3.</button><button onClick="ballSelected('8')" class="button button5">.8.</button></div>
+        <div><button onClick="ballSelected('4')" class="button button5">.4.</button><button onClick="ballSelected('9')" class="button button5">.9.</button></div>
+        <div><button onClick="ballSelected('5')" class="button button5">.5.</button><button onClick="ballSelected('10')" class="button button5">.10.</button></div>
+    </div>
+    <div class="container">
+        <div class="circle" id="circle">
+            <div class="dot" id="dot"></div>
+        </div>
+    </div>
+</div>
+
+<br><br><br><br><br><br><br><br><br><br><br><br>
 
 <div id="exerciseFormContainer"></div>
 
 <div id="newExerciseDIV" style="display:none">
 
-<i>Exercise:</i> <i id="excSelected"></i> 
+   <i>Exercise:</i> <i id="excSelected"></i> 
 
 	<textarea id="exerciseDesc" name="story"
           rows="4" cols="40" maxlength='200'>Description...
 	</textarea>
 
 
-<div class="slidecontainer">
+ <div class="slidecontainer">
   <p>Ball x min</p>
   <button id="minusFr">-</button>
   <input type="range" min="30" max="100" value="30" class="slider" step="10" list="frequencytick" id="myFrequency">
@@ -474,12 +582,11 @@ textarea {
     <option value="80" label="80"></option>
     <option value="90" label="90"></option>
     <option value="100" label="100"></option>
- </datalist>
-  
-</div> 
+  </datalist>
+ </div> 
 
 
-<div class="slidecontainer">
+ <div class="slidecontainer">
   <p>Training Time:</p>
   <button id="minusTraining">-</button>
   <input type="range" min="60" max="240" value="60" class="slider" step="30" list="trainingtick" id="myTraining">
@@ -493,11 +600,11 @@ textarea {
     <option value="180" label="3m"></option>
     <option value="210" label="3,5m"></option>
     <option value="240" label="4m"></option>
-</datalist>
-</div>
+  </datalist>
+ </div>
 
 
-<div class="slidecontainer">
+ <div class="slidecontainer">
   <p>Rest Time:</p>
   <button id="minusRest">-</button>
   <input type=range  min="5" max="60" value="5" class="slider" step="5" list="resttick"  id="myRest">
@@ -516,11 +623,11 @@ textarea {
     <option value="50" label="50"></option>
     <option value="55" label="55"></option>
     <option value="60" label="60"></option>
- </datalist>     
-</div>
+  </datalist>     
+ </div>
 
 
-<div class="slidecontainer">
+ <div class="slidecontainer">
   <p>Training Cycles:</p>
   <button id="minusCycle">-</button>
   <input type="range" min="1" max="10" value="1" class="slider" step="1" list="cycletick" id="myCycle">
@@ -537,31 +644,27 @@ textarea {
     <option value="8" label="8"></option>
     <option value="9" label="9"></option>
     <option value="10" label="10"></option>
+  </datalist>
+ </div>
 
-
-</datalist>
-</div>
-
-<br>
+ <br>
   
-<label class="toggle">
+ <label class="toggle">
   <input class="toggle-checkbox" type="checkbox" id="btnRndDist">
   <div class="toggle-switch"></div>
   <span class="toggle-label">RND Distance</span>
   <output for="btnRndDist" id="outrndD"></output>
-</label>
+ </label>
 
-<br>
-<br>
+ <br>
+ <br>
 
-<label class="toggle">
+ <label class="toggle">
   <input class="toggle-checkbox" type="checkbox" id="btnRndPlace">
   <div class="toggle-switch"></div>
   <span class="toggle-label">RND Place</span>
   <output for="btnRndPlace" id="outrndP"></output>
-</label>
-
- 
+ </label>
 
 
  <br>
@@ -569,7 +672,8 @@ textarea {
  <button onClick="addUpdateItem()" class="button button3">Save</button>
  <button onClick="newExercise('Cancel')" class="button button3">Cancel</button>
    
-</div>
+</div> <!-- close id="newExerciseDIV" -->
+
 
 <div id="calibrationDiv" style="display: none; margin-top: 20px;">
     <h2>Ball Calibration</h2>
@@ -590,32 +694,13 @@ textarea {
 
 <!-- //-------------------------Ball Adjust------------------------------------------------------- -->
 
-<a class="button buttonBallValues" href="#hide" id="hide" onClick="newExercise('Cancel')"> + Ball Adjust</a>
-  <a class="button buttonBallValues" href="#" id="show" onClick="drawBallsExercise()">-- Ball Adjust</a>  
+<a class="button buttonBallValues" href="javascript:void(0)" id="ballAdjustBtn" onClick="toggleBallAdjust()">+ Ball Adjust</a>
   
-   <div id="answer">        
-         <br><br><br><br>
+   <div id="answer" class="hidden">        
+         <br><br><br>
  
      <i>Exercise: </i><i id="exSelected"></i>   
-     	<div class="row">
-  		<div class="column">
-     			<canvas id="BallCanvas" width="200" height="300"></canvas> 
-        	</div>
-  		<div class="column" > 
-       		       <i>Bola: </i><i id="ballSelected">0</i>  
-				<div><button onClick="ballSelected('1')" class="button button5">.1.</button><button onClick="ballSelected('6')" class="button button5">.6.</button></div>  
-    				<div><button onClick="ballSelected('2')" class="button button5">.2.</button><button onClick="ballSelected('7')"  class="button button5">.7.</button></div>
-    				<div><button onClick="ballSelected('3')"  class="button button5">.3.</button><button onClick="ballSelected('8')"  class="button button5">.8.</button></div>
-    				<div><button onClick="ballSelected('4')"  class="button button5">.4.</button><button onClick="ballSelected('9')"  class="button button5">.9.</button></div>
-    				<div><button onClick="ballSelected('5')"  class="button button5">.5.</button><button onClick="ballSelected('10')" class="button button5">.10</button></div>
-  		</div>
-			<div class="container">
-       			 	<div class="circle" id="circle">
-            				<div class="dot" id="dot"></div>
-        			</div>
-     			</div>		
-		     
-    	</div>
+     	
 
    					
 <div class="slidecontainer">
@@ -1003,6 +1088,7 @@ function drawLineAtAngle(x1, y1, length, angle) {
 }
 
 
+/*
 function ballSelected(ballS) {
 	document.getElementById("ballSelected").innerHTML = ballS;
         ballSel = ballS;
@@ -1014,6 +1100,78 @@ function ballSelected(ballS) {
         setTimeout(function() {
   		getBallValues(ballS);
 		}, 50);
+}
+*/
+
+/*
+function ballSelected(ballS) {
+    //alert('bola: ' + ballS);
+    document.getElementById("ballSelected").innerHTML = ballS;  // Mostrar el número de la pelota
+    const idexercise = idExerciseSelected;  // Obtener el ejercicio actual
+    
+    window.alert('ejercicio: ' + idExerciseSelected);
+    
+    let txn = db.transaction(['exercise_ball'], "readonly");
+    let store = txn.objectStore('exercise_ball');
+    let request = store.openCursor();
+
+    request.onsuccess = function() {
+        let cursor = request.result;
+        if (cursor) {
+            let values = cursor.value;
+            if (idexercise == values.idex && ballS == values.idball) {
+                console.log("Pelota encontrada: ", values);
+                alert('Pelota encontrada!');
+                // Dibujar la pelota en el canvas
+                drawBallOnTable(values.trajectory, values.position, values.speed);
+                
+                // Mostrar el efecto de la pelota
+                moveDot(values.spinAngle);
+            }
+            cursor.continue();
+        } else {
+            console.log("Pelota no encontrada en la base de datos.");
+        }
+    };
+}
+*/
+
+
+function ballSelected(ballS) {
+    document.getElementById("ballSelected").innerHTML = ballS;
+    ballSel = ballS;
+
+    //alert("Ejercicio seleccionado:" + idExerciseSelected);
+    //alert("Número de bola seleccionada:" + ballS);
+
+    if (!idExerciseSelected) {
+        alert("El ejercicio no está seleccionado.");
+        return;
+    }
+
+    existBall(ballS);
+
+    setTimeout(function() {
+        getBallValues(ballS);
+    }, 50);
+}
+
+
+function drawBallOnTable(trajectory, position, speed) {
+    eraseCanvas();  // Limpiar el canvas
+    drawTable();    // Volver a dibujar la mesa
+    drawLines();    // Dibujar las líneas de la mesa
+
+    const ctx = canvases[0].getContext('2d');  // Usar el primer canvas para dibujar
+    const speedAdjust = trajectory * speed;
+
+    ctx.beginPath();
+    ctx.moveTo(83, 40);  // Punto de inicio
+    drawLineAtAngle(83, 40, speedAdjust, position);  // Dibujar la línea de trayectoria
+    ctx.strokeStyle = '#f4f105';  // Color amarillo para la trayectoria
+    ctx.stroke();
+
+    drawBallSelection(ballSel);  // Dibujar la pelota seleccionada en la posición final
 }
 
 
@@ -1667,6 +1825,7 @@ function getDescriptionExercise(idKey){
 
 function getBallNumber(){
    var ball = document.getElementById("ballSelected").innerHTML;
+   //alert('numero de bola ' + ball);
    return ball;
 }
 
@@ -1703,6 +1862,9 @@ function getBallRep(){
 }
 
 function addBall() {
+   //alert('ejercicio ' + idExerciseSelected); 
+   //alert('numero de bola ' + getBallNumber());
+
   const transaction = db.transaction(['exercise_ball'], 'readwrite');
   const store = transaction.objectStore('exercise_ball');
   var idx = idExerciseSelected.toString();
@@ -1714,8 +1876,9 @@ function addBall() {
   var spinS = getSpinStr();
   var rep = getBallRep();
   
-  //alert('numero de bola ' + number);
-  const item = {
+ 
+  
+const item = {
     idex: idx,
     idball: number,
     trajectory: traj,
@@ -2905,6 +3068,100 @@ function showCalibration() {
         ballAdjustButtons.forEach(button => button.style.display = 'inline-block'); // Muestra los botones de Ball Adjust
     }
 }
+
+/*
+function toggleBallAdjust() {
+    const playStopContainer = document.getElementById("playStopContainer");
+    const answerDiv = document.getElementById("answer");
+    const ballAdjustBtn = document.getElementById("ballAdjustBtn");
+    const ballAdjustContainer = document.getElementById("ballAdjustContainer");
+
+    if (answerDiv.classList.contains("visible")) {
+        // Ocultar los elementos de Ball Adjust
+        answerDiv.classList.remove("visible");
+        ballAdjustContainer.classList.remove("visible");
+
+        // Mostrar los botones Play y Stop
+        playStopContainer.classList.remove("hidden");
+
+        // Cambiar el texto del botón
+        ballAdjustBtn.innerHTML = "+ Ball Adjust";
+    } else {
+        // Ocultar los botones Play y Stop
+        playStopContainer.classList.add("hidden");
+
+        // Mostrar los elementos de Ball Adjust
+        answerDiv.classList.add("visible");
+        ballAdjustContainer.classList.add("visible");
+
+        // Cambiar el texto del botón
+        ballAdjustBtn.innerHTML = "-- Ball Adjust";
+    }
+}
+*/
+
+/*
+function toggleBallAdjust() {
+    const playStopContainer = document.getElementById("playStopContainer");
+    const answerDiv = document.getElementById("answer");
+    const ballAdjustBtn = document.getElementById("ballAdjustBtn");
+    const ballAdjustContainer = document.getElementById("ballAdjustContainer");
+
+    if (answerDiv.classList.contains("visible")) {
+        // Ocultar los elementos de Ball Adjust
+        answerDiv.classList.remove("visible");
+        ballAdjustContainer.classList.remove("visible");
+
+        // Mostrar los botones Play y Stop
+        playStopContainer.classList.remove("hidden");
+
+        // Cambiar el texto del botón
+        ballAdjustBtn.innerHTML = "+ Ball Adjust";
+    } else {
+        // Ocultar los botones Play y Stop
+        playStopContainer.classList.add("hidden");
+
+        // Mostrar los elementos de Ball Adjust
+        answerDiv.classList.add("visible");
+        ballAdjustContainer.classList.add("visible");
+
+        // Cambiar el texto del botón
+        ballAdjustBtn.innerHTML = "-- Ball Adjust";
+    }
+}
+*/
+
+
+function toggleBallAdjust() {
+    const playStopContainer = document.getElementById("playStopContainer");
+    const answerDiv = document.getElementById("answer");
+    const ballAdjustBtn = document.getElementById("ballAdjustBtn");
+    const ballAdjustContainer = document.getElementById("ballAdjustContainer");
+
+    if (answerDiv.classList.contains("visible")) {
+        // Ocultar los elementos de Ball Adjust
+        answerDiv.classList.remove("visible");
+        ballAdjustContainer.classList.remove("visible");
+
+        // Mostrar los botones Play y Stop
+        playStopContainer.classList.remove("hidden");
+
+        // Cambiar el texto del botón
+        ballAdjustBtn.innerHTML = "+ Ball Adjust";
+        drawBallsExercise(); 
+    } else {
+        // Ocultar los botones Play y Stop
+        playStopContainer.classList.add("hidden");
+
+        // Mostrar los elementos de Ball Adjust
+        answerDiv.classList.add("visible");
+        ballAdjustContainer.classList.add("visible");
+
+        // Cambiar el texto del botón
+        ballAdjustBtn.innerHTML = "-- Ball Adjust";
+    }
+}
+
 
 
 </script>
