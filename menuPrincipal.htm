@@ -212,8 +212,7 @@ vertical {
                 text-decoration:none;
                 position: absolute;
                 left: 5%;
-		margin-top: 1%;
-          }   
+	  }   
 
       
           .buttonBallValues:hover {
@@ -506,30 +505,16 @@ textarea {
 </ul> 
 
 
-<!--
-<div class="column">
-     <canvas width="200" height="300"></canvas>
-     <div class="column">
-    	<label>Select exercise:</label>
-  		<select id="listExercises" name="exercises" size="1" >
-    	        </select>
-    
-    </div>
-  </div>
- <div id="playStopContainer">
-        <button onClick="play()" class="button button3 buttonPlayStop">Play</button>
-        <button onClick="stop()" class="button button3 buttonPlayStop">Stop</button>
-  </div>  
--->
-
 <div class="column">
 <label>Select exercise:</label>
 	<select id="listExercises" name="exercises" size="1" ></select> 
         
 
   <div class="column" style="display: flex; align-items: center; height: 300px;">
-   <canvas width="200" height="300"></canvas>
+   <canvas width="200" height="300"> 
+   </canvas>
    
+   <a class="button buttonBallValues" href="javascript:void(0)" id="ballAdjustBtn" onClick="toggleBallAdjust()">+ Ball Adjust</a>
 
   <div id="playStopContainer" class="visible">
     <button onClick="play()" class="button button3 buttonPlayStop">Play</button>
@@ -695,7 +680,7 @@ textarea {
 
 <!-- //-------------------------Ball Adjust------------------------------------------------------- -->
 
-<a class="button buttonBallValues" href="javascript:void(0)" id="ballAdjustBtn" onClick="toggleBallAdjust()">+ Ball Adjust</a>
+<!-- <a class="button buttonBallValues" href="javascript:void(0)" id="ballAdjustBtn" onClick="toggleBallAdjust()">+ Ball Adjust</a> -->
   
    <div id="answer" class="hidden">        
          <br><br><br>
