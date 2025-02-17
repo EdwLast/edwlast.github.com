@@ -390,6 +390,7 @@ textarea {
  input[type="range"] {
             width: 220px; /* Cambia el tamaño según tus necesidades */
             height: 10px; /* Cambia la altura */
+	    margin-bottom: 3px;	
             //border-radius: 30px; /* Bordes redondeados del track */
 	    //border-radius: 50%;			
         }
@@ -397,6 +398,7 @@ textarea {
         /* Personalizar la pista del slider */
         input[type="range"]::-webkit-slider-runnable-track {
         height: 10px; /* Cambia la altura de la pista */
+        margin-bottom: 3px;
 	//border-radius: 30px; /* Bordes redondeados del track */
 	//border-radius: 50%;
         }
@@ -700,7 +702,7 @@ textarea {
      	
 
    					
-<div class="slider-container">
+<div class="slidecontainer">
   <p>Trajectory:</p>
   <button id="minusTr">-</button>
   <input type="range" min="1" max="20" value="10" class="slider" step="1" list="trajectorytick" id="myTrajectory" 
@@ -730,7 +732,7 @@ textarea {
 </div> 
 
 
-<div class="slider-container">
+<div class="slidecontainer">
   <p>Speed:</p>
   <button id="minusSpeed">-</button>
   <input type="range" min="0" max="20" value="0" class="slider" step="1" list="speedtick" id="mySpeed" onchange=handleTrajectory()>
@@ -752,7 +754,7 @@ textarea {
 </div>
 
 
-<div class="slider-container">
+<div class="slidecontainer">
   <p>Position:</p>
   <button id="minusPos">-</button>
   <input type=range  min="74" max="106" value="90" class="slider" step="2" list="positiontick"  id="myPosition"  onchange=handleTrajectory()>
@@ -781,7 +783,7 @@ textarea {
 </div>
 
 
-<div class="slider-container">
+<div class="slidecontainer">
   <p>Spin angle:</p>
   <button id="minusSpinAn">-</button>
   <input type="range" min="-180" max="210" value="210" class="slider" step="30" list="spinAngtick" id="mySpinAng">
@@ -806,7 +808,7 @@ textarea {
 </div>
 
 
-<div class="slider-container">
+<div class="slidecontainer">
   <p>Spin strength:</p>
   <button id="minusSpinStr">-</button>
   <input type="range" min="1" max="20" value="1" class="slider" step="1" list="spintick" id="mySpinStr">
@@ -827,7 +829,7 @@ textarea {
 </datalist>
 </div>
 
-<div class="slider-container">
+<div class="slidecontainer">
   <p>Ball repetition:</p>
   <button id="minusRepStr">-</button>
   <input type="range" min="1" max="30" value="1" class="slider" step="1" list="reptick" id="myRepStr">
