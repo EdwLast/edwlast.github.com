@@ -329,6 +329,7 @@ textarea {
 
 .canvas-container {
    margin-right: 10px; /* Espacio entre el canvas y el botón */
+   position: relative; /* Permite que los elementos hijos con position: absolute se posicionen respecto a este contenedor */
 }
 
 .circle {
@@ -450,9 +451,10 @@ textarea {
   z-index: 10;  /* Asegura que el botón quede encima del contenido */
   */
   position: absolute;
-  top: 55%;
   left: 3%;
   z-index: 10;  /* Asegura que el botón quede encima del contenido */ 
+  margin-top: 60px;
+ 
 }
 
 </style>
