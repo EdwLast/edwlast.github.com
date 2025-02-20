@@ -379,6 +379,8 @@ textarea {
     background-color: #1c84ed; /* Color de fondo del botón */
     color: white;    /* Color del texto */
     border: none;    /* Elimina el borde predeterminado */
+    margin: 0px 0; /* Reduce el margen para disminuir la separación */
+  
 }
 
 .slidecontainer button:hover {
@@ -392,7 +394,9 @@ textarea {
             height: 6px; /* Cambia la altura */
 	    margin-bottom: 0px;	
             //border-radius: 30px; /* Bordes redondeados del track */
-	    //border-radius: 50%;			
+	    //border-radius: 50%;
+   	
+	
         }
 
         /* Personalizar la pista del slider */
@@ -401,7 +405,52 @@ textarea {
         margin-bottom: 0px;
 	//border-radius: 30px; /* Bordes redondeados del track */
 	//border-radius: 50%;
+	
         }
+
+
+/* Contenedor principal de cada slider */
+.slider-group {
+    
+    align-items: center; /* Centra verticalmente los elementos */
+    justify-content: space-between; /* Separa el texto y los controles */
+    margin-bottom: 10px; /* Espacio entre cada grupo de sliders */
+ 
+}
+
+/* Estilo para el texto del slider */
+.slider-label {
+    font-size: 15px; /* Tamaño de la letra */
+    margin: 5px; /* Elimina el margen predeterminado */
+    flex: 1; /* Ocupa el espacio disponible a la izquierda */
+}
+
+/* Contenedor de los controles del slider (botones y slider) */
+.slider-controls {
+    display: flex; /* Usa Flexbox para alinear botones y slider */
+    align-items: center; /* Centra verticalmente los elementos */
+    gap: 5px; /* Espacio entre los botones y el slider */
+}
+
+/* Estilo para los botones de los sliders */
+.slider-controls button {
+   width: 40px;    /* Ancho del botón */
+    height: 25px;   /* Altura del botón */
+    font-size: 15px; /* Tamaño de fuente para el texto del botón */
+    border-radius: 30%; /* Bordes redondeados para hacerlos circulares */
+    background-color: #1c84ed; /* Color de fondo del botón */
+    color: white;    /* Color del texto */
+    border: none;    /* Elimina el borde predeterminado */
+    margin: 0px 0; /* Reduce el margen para disminuir la separación */
+}
+
+/* Estilo para los sliders */
+.slider {
+    width: 150px; /* Ancho del slider */
+    margin: 0; /* Elimina el margen predeterminado */
+}
+
+
 
 * { 
   touch-action: manipulation;
@@ -699,11 +748,12 @@ textarea {
          <br><br>
  
      <i>Exercise: </i><i id="exSelected"></i>   
-     	
+     	<br>
 
    					
-<div class="slidecontainer">
-  <p>Trajectory:</p>
+<div class="slider-group">
+   <p class="slider-label">Trajectory:</p>
+ <div class="slider-controls">
   <button id="minusTr">-</button>
   <input type="range" min="1" max="20" value="10" class="slider" step="1" list="trajectorytick" id="myTrajectory" 
   oninput="this.nextElementSibling.value = this.value" onchange=handleTrajectory()>
@@ -729,11 +779,13 @@ textarea {
   <option value="16" label=" "></option>
   <option value="17" label=" "></option>
 </datalist>
+</div>
 </div> 
 
 
-<div class="slidecontainer">
-  <p>Speed:</p>
+<div class="slider-group">
+  <p class="slider-label">Speed:</p>
+  <div class="slider-controls">
   <button id="minusSpeed">-</button>
   <input type="range" min="0" max="20" value="0" class="slider" step="1" list="speedtick" id="mySpeed" onchange=handleTrajectory()>
   <button id="plusSpeed">+</button>
@@ -752,10 +804,11 @@ textarea {
   <option value="" label=". 20"></option>
 </datalist>  
 </div>
+</div>
 
-
-<div class="slidecontainer">
-  <p>Position:</p>
+<div class="slider-group">
+  <p class="slider-label">Position:</p>
+  <div class="slider-controls">
   <button id="minusPos">-</button>
   <input type=range  min="74" max="106" value="90" class="slider" step="2" list="positiontick"  id="myPosition"  onchange=handleTrajectory()>
   <button id="plusPos">+</button>
@@ -781,10 +834,11 @@ textarea {
       <option value="74" label=". Right"></option>
 	</datalist>
 </div>
+</div>
 
-
-<div class="slidecontainer">
-  <p>Spin angle:</p>
+<div class="slider-group">
+  <p class="slider-label">Spin angle:</p>
+  <div class="slider-controls">
   <button id="minusSpinAn">-</button>
   <input type="range" min="-180" max="210" value="210" class="slider" step="30" list="spinAngtick" id="mySpinAng">
   <button id="plusSpinAn">+</button>
@@ -806,10 +860,11 @@ textarea {
   <option value="210" data-customvalue="NoSpin"></option>
 </datalist>
 </div>
+</div>
 
-
-<div class="slidecontainer">
-  <p>Spin strength:</p>
+<div class="slider-group">
+  <p class="slider-label">Spin strength:</p>
+   <div class="slider-controls">
   <button id="minusSpinStr">-</button>
   <input type="range" min="1" max="20" value="1" class="slider" step="1" list="spintick" id="mySpinStr">
   <button id="plusSpinStr">+</button>
@@ -828,9 +883,11 @@ textarea {
   <option value="20" label=". 20"></option>
 </datalist>
 </div>
+</div>
 
-<div class="slidecontainer">
-  <p>Ball repetition:</p>
+<div class="slider-group">
+  <p class="slider-label">Ball repetition:</p>
+  <div class="slider-controls">
   <button id="minusRepStr">-</button>
   <input type="range" min="1" max="30" value="1" class="slider" step="1" list="reptick" id="myRepStr">
   <button id="plusRepStr">+</button>
@@ -849,7 +906,7 @@ textarea {
   <option value="" label=". 20"></option>
 </datalist>
 </div>
-
+</div>
 
  <br>
  <button onClick="sendTest()" class="button button3">Test</button> 
