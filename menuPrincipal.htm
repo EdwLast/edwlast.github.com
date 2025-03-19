@@ -434,8 +434,8 @@ textarea {
 
 /* Estilo para los botones de los sliders */
 .slider-controls button {
-   width: 40px;    /* Ancho del botón */
-    height: 25px;   /* Altura del botón */
+   width: 45px;    /* Ancho del botón */
+    height: 30px;   /* Altura del botón */
     font-size: 15px; /* Tamaño de fuente para el texto del botón */
     border-radius: 30%; /* Bordes redondeados para hacerlos circulares */
     background-color: #1c84ed; /* Color de fondo del botón */
@@ -515,6 +515,18 @@ textarea {
 .slider-container input[type="range"] {
   margin-top: 3px;
   margin-bottom: 3px;
+}
+
+#myPosition {
+  direction: ltr; /* Asegura que el slider funcione de forma normal */
+  transform: scaleX(-1); /* Invierte visualmente el slider */
+}
+
+#outputPos {
+  direction: rtl; /* Asegura que el número se muestre correctamente */
+  display: inline-block;
+  min-width: 30px; /* Ajusta el tamaño para que los valores no se desplacen */
+  text-align: center;
 }
 
 </style>
@@ -755,7 +767,7 @@ textarea {
    <p class="slider-label">Trajectory:</p>
  <div class="slider-controls">
   <button id="minusTr">-</button>
-  <input type="range" min="1" max="20" value="10" class="slider" step="1" list="trajectorytick" id="myTrajectory" 
+  <input type="range" min="1" max="20" value="1" class="slider" step="1" list="trajectorytick" id="myTrajectory" 
   oninput="this.nextElementSibling.value = this.value" onchange=handleTrajectory()>
   <button  id="plusTr">+</button>
   <output for="myTrajectory" id="outputTr">10</output>
@@ -809,9 +821,9 @@ textarea {
 <div class="slider-group">
   <p class="slider-label">Position:</p>
   <div class="slider-controls">
-  <button id="minusPos">-</button>
+  <button id="minusPos">-></button>
   <input type=range  min="74" max="106" value="90" class="slider" step="2" list="positiontick"  id="myPosition"  onchange=handleTrajectory()>
-  <button id="plusPos">+</button>
+  <button id="plusPos"><-</button>
   <output for="myPosition" id="outputPos">90</output>
  	 <datalist id="positiontick">
       <option value="106" label=". Left"></option>
@@ -1117,7 +1129,8 @@ function drawBallSelected(x1, y1, length, angle) {
       
     radians = angle * (Math.PI/180);     
     xBall = x1 - Math.cos(radians ) * length; //cambie el signo en x1 a -	 
-    yBall = y1 + Math.sin(radians ) * length;
+   //xBall = Math.cos(radians ) * length - x1; //cambie el signo en x1 a -	 
+   yBall = y1 + Math.sin(radians ) * length;
     
     for( var i=0; i<canvases.length; i++){
        
@@ -1234,7 +1247,7 @@ function drawBallOnTable(trajectory, position, speed) {
 function handleTrajectory() {
   
   var trayectory = parseInt(document.getElementById("myTrajectory").value); //10
-  var position = parseInt(document.getElementById("myPosition").value); //90
+  var position = 180 - parseInt(document.getElementById("myPosition").value); //90
   var speed = parseInt(document.getElementById("mySpeed").value); //15
   var spinAngle =  parseInt(document.getElementById("mySpinAng").value); 
   var spinStren =  parseInt(document.getElementById("mySpinStr").value); 
