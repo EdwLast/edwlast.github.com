@@ -495,12 +495,7 @@ textarea {
 }
 
 #ballAdjustBtn {
-  /*
-  position: fixed;
-  top: 410px;  /* Ajusta según la posición deseada */
-  left: 28px;
-  z-index: 10;  /* Asegura que el botón quede encima del contenido */
-  */
+  display: inline-block; /* Asegurar visibilidad inicial */
   position: absolute;
   left: 7%;
   margin-top: 10px;
@@ -833,8 +828,6 @@ textarea {
       <option value="96" label=" "></option>
       <option value="94" label=" "></option>
       <option value="92" label=" "></option>
-      <option value="92" label=" "></option>
-      <option value="92" label=" "></option>
       <option value="90" label="-- 0"></option>
       <option value="88" label=" "></option>
       <option value="86" label=" "></option>
@@ -1056,7 +1049,7 @@ let typeTransaction = ''; //Se usa para que el botón "Save" que se utiliza en l
  drawTable();
  drawLines(); 
   
- handleTrajectory();
+handleTrajectory();
   
 
 function timerDelay() {
@@ -1157,53 +1150,6 @@ function drawLineAtAngle(x1, y1, length, angle) {
 }
 
 
-/*
-function ballSelected(ballS) {
-	document.getElementById("ballSelected").innerHTML = ballS;
-        ballSel = ballS;
-         
-        var ex = 0;
-  	
-        existBall(ballS);
-
-        setTimeout(function() {
-  		getBallValues(ballS);
-		}, 50);
-}
-*/
-
-/*
-function ballSelected(ballS) {
-    //alert('bola: ' + ballS);
-    document.getElementById("ballSelected").innerHTML = ballS;  // Mostrar el número de la pelota
-    const idexercise = idExerciseSelected;  // Obtener el ejercicio actual
-    
-    window.alert('ejercicio: ' + idExerciseSelected);
-    
-    let txn = db.transaction(['exercise_ball'], "readonly");
-    let store = txn.objectStore('exercise_ball');
-    let request = store.openCursor();
-
-    request.onsuccess = function() {
-        let cursor = request.result;
-        if (cursor) {
-            let values = cursor.value;
-            if (idexercise == values.idex && ballS == values.idball) {
-                console.log("Pelota encontrada: ", values);
-                alert('Pelota encontrada!');
-                // Dibujar la pelota en el canvas
-                drawBallOnTable(values.trajectory, values.position, values.speed);
-                
-                // Mostrar el efecto de la pelota
-                moveDot(values.spinAngle);
-            }
-            cursor.continue();
-        } else {
-            console.log("Pelota no encontrada en la base de datos.");
-        }
-    };
-}
-*/
 
 
 function ballSelected(ballS) {
@@ -1226,22 +1172,6 @@ function ballSelected(ballS) {
 }
 
 
-function drawBallOnTable(trajectory, position, speed) {
-    eraseCanvas();  // Limpiar el canvas
-    drawTable();    // Volver a dibujar la mesa
-    drawLines();    // Dibujar las líneas de la mesa
-
-    const ctx = canvases[0].getContext('2d');  // Usar el primer canvas para dibujar
-    const speedAdjust = trajectory * speed;
-
-    ctx.beginPath();
-    ctx.moveTo(83, 40);  // Punto de inicio
-    drawLineAtAngle(83, 40, speedAdjust, position);  // Dibujar la línea de trayectoria
-    ctx.strokeStyle = '#f4f105';  // Color amarillo para la trayectoria
-    ctx.stroke();
-
-    drawBallSelection(ballSel);  // Dibujar la pelota seleccionada en la posición final
-}
 
 
 function handleTrajectory() {
@@ -1508,13 +1438,23 @@ function getSelectedExercise(){
 //Muestra en pantalla los campos para ingresar un nuevo ejercicio  
 function newExercise(btn) {
   var x = document.getElementById("newExerciseDIV");
-  
+  var ballAdjustBtn = document.getElementById("ballAdjustBtn"); //oculta el Ball Adjust
+  var answerDiv = document.getElementById("answer");
 
   if (x.style.display === "none")
   {
     if (btn === "New") 
     {
-    	x.style.display = "block";
+    	
+        ballAdjustBtn.style.display = "none"; // Ocultar botón Ball Adjust
+	 if (answerDiv.classList.contains("visible")) {
+            toggleBallAdjust(); // Simular click para cerrar
+        } 	
+
+        eraseCanvas(); 
+  	drawTable();
+  	drawLines();
+        x.style.display = "block";
         typeTransaction = 'New';
 	document.getElementById("exerciseDesc").value = "";
         sliderChangeBar(myFrequency,30);
@@ -1539,7 +1479,8 @@ function newExercise(btn) {
   { 
     if (btn === "Cancel") 
     { 
-    	x.style.display = "none";
+    	ballAdjustBtn.style.display = "inline-block"; // Mostrar botón Ball Adjust
+ 	x.style.display = "none";
 	typeTransaction = '';	
     }		
   }
@@ -1664,6 +1605,7 @@ function rndPlace() {
 
 
 async function addItem() {
+  
   let newExerciseId = await getLastIdExercise(); // Obtener el ID del nuevo ejercicio  
   newExerciseId = newExerciseId + 1;    
   let strExerciseId = String(newExerciseId);
@@ -1789,7 +1731,9 @@ function addUpdateItem() {
 	if (typeTransaction == 'Modify') {
       	   updateItem();		
        }
-    }		  
+    }
+ document.getElementById("ballAdjustBtn").style.display = "inline-block";
+ newExercise('Cancel'); //close the window "New Excercise"		  
 }
 
 
@@ -1810,7 +1754,19 @@ function addUpdateItem() {
  function modifyExercise(){
    var idex = getSelectedExercise();
    typeTransaction = 'Modify';   
-   
+    
+  var x = document.getElementById("newExerciseDIV");
+  var ballAdjustBtn = document.getElementById("ballAdjustBtn");
+  var answerDiv = document.getElementById("answer");
+
+  // Ocultar botón Ball Adjust si está visible
+  ballAdjustBtn.style.display = "none";
+  
+  // Cerrar controles de Ball Adjust si están abiertos
+  if (answerDiv.classList.contains("visible")) {
+      toggleBallAdjust(); 
+  }	
+
    newExercise(typeTransaction); //muestra la pantalla que contiene los parametros.
    
            	
@@ -2193,7 +2149,7 @@ function drawBallsExercise() {
        		//alert('bola: ' + ballnumber);
 
                 var trayectory = values.trajectory;
-    		var position = values.position;
+    		var position = 180 - values.position;
     		var speed = values.speed;
     		var speedAdjust = trayectory * speed;       
 		
